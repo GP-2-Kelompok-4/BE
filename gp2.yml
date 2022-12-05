@@ -1,0 +1,1145 @@
+openapi: 3.0.3
+info:
+  title: GP2-Kelompok4-API
+  version: 1.0.0
+  description: Documentation API Dashboard-Project Kel 4
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/ACHMADQIZWINI4_1/Immersive-Dashboard-Project/1.0.0
+
+tags:
+  - name: Authentication
+    description: "authentication"
+  - name: Users
+    description: "Data User managemen"
+  - name: Classes
+    description: "Data Class management"
+  - name: Mentees
+    description: "data mentee management"
+  - name: Logs
+    description: "data log management"
+
+paths:
+  /login:
+    post:
+      tags: 
+      - Authentication
+      summary: Login to system
+      requestBody: 
+        required: true
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              example:
+                email: "user1@gmail.com"
+                password: "qwerty"
+      responses:
+        '200': 
+          description: Success login.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: "success"
+                  data: 
+                      id: 12345
+                      email: "user1@gmail.com"
+                      token: "asd123"
+                      role: "user"
+        '400':
+          description: Failed login.
+          content:
+            application/json:
+              schema:
+                type: object
+                example: 
+                  status: failed
+                  message: "Bad Request"
+                  data: null
+        '401':
+          description: Failed login.
+          content:
+            application/json:
+              schema:
+                type: object
+                example: 
+                  status: "failed"
+                  message: "Access token is missing or invalid"
+                  data: null
+        '500':
+          $ref: '#/components/responses/500'
+
+  /users:
+    post:
+      tags:
+        - Users
+      summary: add user
+      description: Menambah data User (register)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: "budi"
+                email: "budi@mail.com"
+                password: "qwerty"
+                role: user
+                team: academic
+      responses:
+        '201':
+          description: Success register new user.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: "success register new user"
+                  data:
+                    id: 12345
+                    name: budi
+                    email: budi@gmail.com
+                    password: "qwerty"
+
+        '400':
+          description: Register failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "failed"
+                  message: "register failed, semua field harus diisi"
+                  data: null
+        '404':
+          $ref: '#/components/responses/404'
+                  
+        '500':
+          $ref: '#/components/responses/500'
+      
+    get:
+      tags:
+        - Users
+      summary: Get All Users
+      description: Show All User Data
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: key
+          description: ""
+          required: false
+          in: query
+          schema:
+            type: string
+            example: "key"
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success get all users"
+                  data:
+                    -   id: 1
+                        name: "Budi"
+                        email: "Budi@mail.com"
+                        password: "qwerty"
+                        phone_number: "0822349"
+                        role: "user"
+                        address: "surabaya"
+                        home_address: "jl. sudirman, jember"
+                        team: "placement"
+                        status: "active"
+                        gender: "male"
+                    -   id: 2
+                        name: "Andi"
+                        email: "Andi@mail.com"
+                        password: "qwerty"
+                        phone_number: "0822349"
+                        role: "admin"
+                        address: "surabaya"
+                        home_address: "jl. sudirman, jember"
+                        team: "placement"
+                        status: "active"
+                        gender: "male"
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+    put:
+      tags:
+        - Users
+      summary: update users
+      description: Update user by user
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: "Andi"
+                email: "Andi@mail.com"
+                password: "qwerty"
+                phone_number: "0822349"
+                role: "user"
+                address: "surabaya"
+                home_address: "jl. sudirman, jember"
+                team: "placement"
+                status: "active"
+                gender: "male"
+      responses:
+        '200':
+          description: Success update user
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success update users"
+                  data: 
+                    id: 1
+                    name: "Andi"
+                    email: "Andi@mail.com"
+                    password: "qwerty"
+                    phone_number: "0822349"
+                    role: "user"
+                    address: "surabaya"
+                    home_address: "jl. sudirman, jember"
+                    team: "placement"
+                    status: "active"
+                    gender: "male"
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /users/{user_id}:
+    delete:
+      tags:
+        - Users
+      summary: delete users
+      description: delete user 
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id_user
+          description: "id user"
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: success delete user
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success delete user"
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+    put:
+      tags:
+        - Users
+      summary: update users
+      description: Update user by admin
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: id_user
+          description: "id user"
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: "budi"
+                email: "budi@mail.com"
+                password: "qwerty"
+                phone_number: "0822349"
+                role: "user"
+                address: "surabaya"
+                home_address: "jl. sudirman, jember"
+                team: "placement"
+                status: "active"
+                gender: "male"
+      responses:
+        '200':
+          description: Success updet user 
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success update user"
+                  data :
+                    id : 2
+                    name: "budi"
+                    email: "budi@mail.com"
+                    password: "qwerty"
+                    phone_number: "0822349"
+                    role: "user"
+                    address: "surabaya"
+                    home_address: "jl. sudirman, jember"
+                    team: "placement"
+                    status: "active"
+                    gender: "male"
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /mentees:
+    get:
+      tags:
+        - Mentees
+      summary: get all mentees
+      description: show all mentee
+      security:
+        - JWTAuth: []
+    
+      responses:
+        '200':
+          description: A list of mentees
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success get all mentees"
+                  data:
+                    id: 1
+                    name: "Budi Sudarsono"
+                    nickname: "Budi"
+                    gender: "Male"
+                    email: "Budi@gmail.com"
+                    phone_number: "081122"
+                    telegram_account: "@budi"
+                    discord_account: "Budi#123"
+                    class: "BE 13"
+                    address: jl. sepakbola, Yogyakarta
+                    home_address: "jl. Sukamaju, Bandung"
+                    status: "placement"
+                    education_type: "Non-IT"
+                    education_major: "IPA"
+                    institution: "SMA 1 Sukamaju"
+                    graduate: "2020"
+                    emergency_contact: "0811122"
+                    emergency_contact_name: "Mawar"
+                    emergency_contact_status: "Orang tua"
+
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      tags:
+        - Mentees
+      summary: add mentee
+      description: Menambah data mentee 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: "Budi Sudarsono"
+                nickname: "Budi"
+                gender: "Male"
+                email: "Budi@gmail.com"
+                phone_number: "081122"
+                telegram_account: "@budi"
+                discord_account: "Budi#123"
+                class: "BE 13"
+                address: jl. sepakbola, Yogyakarta
+                home_address: "jl. Sukamaju, Bandung"
+                status: "placement"
+                education_type: "Non-IT"
+                education_major: "IPA"
+                institution: "SMA 1 Sukamaju"
+                graduate: "2020"
+                emergency_contact: "0811122"
+                emergency_contact_name: "Mawar"
+                emergency_contact_status: "Orang tua"
+      responses:
+        '201':
+          description: Success add new mentee.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: "success add new mentee"
+                  data:
+                    id: 1
+                    name: "Budi Sudarsono"
+                    nickname: "Budi"
+                    gender: "Male"
+                    email: "Budi@gmail.com"
+                    phone_number: "081122"
+                    telegram_account: "@budi"
+                    discord_account: "Budi#123"
+                    class: "BE 13"
+                    address: jl. sepakbola, Yogyakarta
+                    home_address: "jl. Sukamaju, Bandung"
+                    status: "placement"
+                    education_type: "Non-IT"
+                    education_major: "IPA"
+                    institution: "SMA 1 Sukamaju"
+                    graduate: "2020"
+                    emergency_contact: "0811122"
+                    emergency_contact_name: "Mawar"
+                    emergency_contact_status: "Orang tua"
+
+        '400':
+          description: Add new mentee failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "failed"
+                  message: "Add new mentee, semua field harus diisi"
+                  data: null
+        '404':
+          $ref: '#/components/responses/404'
+                  
+        '500':
+          $ref: '#/components/responses/500'
+
+  /mentees/{mentee_id}:
+    get:
+      tags:
+        - Mentees
+      summary: get spesific mentees
+      description: show the spesific mentee
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: mentee_id
+          description: "mentee id"
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+    
+      responses:
+        '200':
+          description: A spesific mentees data
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success get spesific mentee"
+                  data:
+                    id: 1
+                    name: "Budi Sudarsono"
+                    nickname: "Budi"
+                    gender: "Male"
+                    email: "Budi@gmail.com"
+                    phone_number: "081122"
+                    telegram_account: "@budi"
+                    discord_account: "Budi#123"
+                    class: "BE 13"
+                    address: jl. sepakbola, Yogyakarta
+                    home_address: "jl. Sukamaju, Bandung"
+                    status: "placement"
+                    education_type: "Non-IT"
+                    education_major: "IPA"
+                    institution: "SMA 1 Sukamaju"
+                    graduate: "2020"
+                    emergency_contact: "0811122"
+                    emergency_contact_name: "Mawar"
+                    emergency_contact_status: "Orang tua"
+                    log: 
+                      id: 1
+                      user_id: "fakhry"
+                      notes: "ini notes"
+                      status: "interview"
+
+
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+
+    delete:
+      tags:
+        - Mentees
+      summary: delete mentee
+      description: delete mentee
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: mentee_id
+          description: "mentee_id"
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: success delete mentee
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success delete mentee"
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+    put:
+      tags:
+        - Mentees
+      summary: update mentee
+      description: Update mentee
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: mentee_id
+          description: "mentee id"
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: "Andi santoso"
+                nickname: "Andi"
+                gender: "Male"
+                email: "Andi@gmail.com"
+                phone_number: "081122"
+                telegram_account: "@Andi"
+                discord_account: "Andi#123"
+                class: "BE 13"
+                address: jl. sepakbola, Yogyakarta
+                home_address: "jl. Sukamaju, Bandung"
+                status: "placement"
+                education_type: "Non-IT"
+                education_major: "IPA"
+                institution: "SMA 1 Sukamaju"
+                graduate: "2020"
+                emergency_contact: "0811122"
+                emergency_contact_name: "Mawar"
+                emergency_contact_status: "Orang tua"
+      responses:
+        '200':
+          description: A list of mentee
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success delete users"
+                  data: 
+                    id: 2
+                    name: "Andi santoso"
+                    nickname: "Andi"
+                    gender: "Male"
+                    email: "Andi@gmail.com"
+                    phone_number: "081122"
+                    telegram_account: "@Andi"
+                    discord_account: "Andi#123"
+                    class: "BE 13"
+                    address: jl. sepakbola, Yogyakarta
+                    home_address: "jl. Sukamaju, Bandung"
+                    status: "placement"
+                    education_type: "Non-IT"
+                    education_major: "IPA"
+                    institution: "SMA 1 Sukamaju"
+                    graduate: "2020"
+                    emergency_contact: "0811122"
+                    emergency_contact_name: "Mawar"
+                    emergency_contact_status: "Orang tua"
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /class:
+    get:
+      tags:
+        - Classes
+      summary: get all classes
+      description: show all classes
+      security:
+        - JWTAuth: []
+    
+      responses:
+        '200':
+          description: A list of classes
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success get all classes"
+                  data:
+                    id: 1
+                    name: "BE 13"
+                    start_date: "2022-10-24"
+                    graduate_date: "2022-12-31"
+                    mentor: fakhry
+                   
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    post:
+      tags:
+        - Classes
+      summary: add new classes
+      description: Menambah data classes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+               name: "BE 13"
+               mentor: 1
+               start_date: "2022-10-24"
+               graduate_date: "2022-12-31"
+      responses:
+        '201':
+          description: Success add new class.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: "success add new class"
+                  data: 
+                    id: 1
+                    name: "BE 13"
+                    mentor: fakhry
+                    start_date: "2022-10-24"
+                    graduate_date: "2022-12-31"
+                
+        '400':
+          description: Add new class failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "failed"
+                  message: "failed add new class, semua field harus diisi"
+                  data: null
+        '404':
+          $ref: '#/components/responses/404'
+                  
+        '500':
+          $ref: '#/components/responses/500'
+  /classes/{class_id}:
+    get:
+      tags:
+        - Classes
+      summary: get spesific class
+      description: show the spesific class
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: class_id
+          description: "class id"
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+    
+      responses:
+        '200':
+          description: Data of a spesific class  
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success get spesific class"
+                  data:
+                    id: 1
+                    name: "BE 13"
+                    mentor: fakhry
+                    start_date: "2022-10-24"
+                    graduate_date: "2022-12-31"
+
+
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+
+    delete:
+      tags:
+        - Classes
+      summary: delete class
+      description: delete class
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: class_id
+          description: "class_id"
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: success delete class
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success delete class"
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+    put:
+      tags:
+        - Classes
+      summary: update class
+      description: Update class
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: class_id
+          description: "class id"
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: "FE 13"
+                mentor: 4
+                start_date: "2022-10-24"
+                graduate_date: "2022-12-31"
+      responses:
+        '200':
+          description: An update class 
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success update class"
+                  data:
+                    id: 3 
+                    name: "FE 13"
+                    mentor: Jerry
+                    start_date: "2022-10-24"
+                    graduate_date: "2022-12-31"
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+  /log:
+    post:
+      tags:
+        - Logs
+      summary: Add new log 
+      description: Add new log for mentees
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                user_id: 2
+                mentee_id: 3
+                notes: "this is the notes related to mentee"
+                status: "placement"
+      responses:
+        '201':
+          description: Success add new log.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  message: "success add new log"
+                  data: 
+                    id: 1
+                    user_id: "fakhry"
+                    mentee_id: "jojo"
+                    notes: "this is the notes related to mentee"
+                    status: "placement"
+                
+        '400':
+          description: Add new mentee failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "failed"
+                  message: "failed add new log, semua field harus diisi"
+                  data: null
+        '404':
+          $ref: '#/components/responses/404'
+                  
+        '500':
+          $ref: '#/components/responses/500'
+  /log/{log_id}:
+    put:
+      tags:
+        - Logs
+      summary: update log
+      description: Update selected log
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: log_id
+          description: "log id"
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                user_id: 2
+                mentee_id: 3
+                notes: "this is the notes related to mentee"
+                status: "placement"
+      responses:
+        '200':
+          description: An update log
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success update log"
+                  data:
+                    id: 1
+                    user_id: fakhry
+                    mentee_id: jojo
+                    notes: "updated log for mentee"
+                    status: "placement"
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+
+    delete:
+      tags:
+        - Logs
+      summary: delete log
+      description: delete spesific log
+      security:
+        - JWTAuth: []
+      parameters:
+        - name: log_id
+          description: "log_id"
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: success delete log
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: "success"
+                  message: "success delete log"
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+####################################
+#  COMPONENTS
+####################################
+components:
+  securitySchemes:
+    JWTAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "use Token"
+
+  schemas:
+    Users:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        phone_number:
+          type: string
+        role:
+          type: string
+          enum:
+            - Admin
+            - User
+        address:
+          type: string
+        home_address:
+          type: string
+        team:
+          type: string
+          enum:
+            - Academic 
+            - Placement 
+            - People skill
+            - Admission 
+        status:
+          type: string
+          enum:
+            - Active
+            - Non-active
+        gender:
+          type: string
+          enum:
+            - Male
+            - Female
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        deleted_at:
+          type: string
+          format: date-time
+    Mentees:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        nickname:
+          type: string
+        email:
+          type: string
+        gender:
+          type: string
+          enum:
+            - male
+            - female
+        phone_number:
+          type: string
+        class:
+          type: integer
+          format: int64
+        address:
+          type: string
+        home_address:
+          type: string
+        telegram_account:
+          type: string
+        discord_account:
+          type: string
+        status:
+          type: string
+          enum:
+            - Interview
+            - Join class
+            - Unit 1
+            - Unit 2
+            - Unit 2
+            - Repeat unit 1
+            - Repeat unit 2
+            - Repeat unit 3
+            - Placement
+            - Eliminated
+            - Graduated
+        education_type:
+          type: string
+          enum:
+          - IT
+          - Non-IT
+        education_major:
+          type: string
+        graduateed:
+          type: string
+          format: year
+        institution:
+          type: string
+        emergency_contact:
+          type: string
+        emergency_contact_name:
+          type: string
+        emergency_contact_status:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        deleted_at:
+          type: string
+          format: date-time
+    Classes:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        user_id:
+          type: integer
+          format: int64
+        started_date:
+          type: string
+          format: date
+        graduated_date:
+          type: string
+          format: date
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        deleted_at:
+          type: string
+          format: date-time
+    Logs:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        user_id:  
+          type: integer
+          format: int64
+        mentee_id:  
+          type: integer
+          format: int64
+        notes: 
+          type: string
+        status:
+          type: string
+          enum:
+            - Interview
+            - Join class
+            - Unit 1
+            - Unit 2
+            - Unit 2
+            - Repeat unit 1
+            - Repeat unit 2
+            - Repeat unit 3
+            - Placement
+            - Eliminated
+            - Graduated
+
+    ResponseWithoutData:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+  responses:
+
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ResponseWithoutData'
+          example:
+            status: "failed"
+            message: "requested resource was not found"
+            data: null
+
+
+    '500':
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ResponseWithoutData'
+          example:
+            message: "internal server error"
+            data: null
