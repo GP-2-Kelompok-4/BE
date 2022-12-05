@@ -26,7 +26,7 @@ WORKDIR /app
 ADD . .
 
 ##buat executeable
-RUN go build -o main .
+RUN go build -o immersive-dashboard .
 
 ##jalankan executeable
-CMD ["./main"]
+CMD ["./immersive-dashboard"]
