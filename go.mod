@@ -1,3 +1,3 @@
-module github.com/GP-2-Kelompok-4/alterra-immersive-dashboard
+module gp2/kel4
 
 go 1.19
