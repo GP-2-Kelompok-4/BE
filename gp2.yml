@@ -26,15 +26,18 @@ paths:
       tags: 
       - Authentication
       summary: Login to system
+      security:
+        - JWTAuth: []
       requestBody: 
         required: true
         content: 
           application/json: 
             schema: 
               type: object
-              example:
-                email: "user1@gmail.com"
-                password: "qwerty"
+              $ref: '#/components/schemas/Login'
+            example:
+              email: "user1@gmail.com"
+              password: "qwerty"
       responses:
         '200': 
           description: Success login.
@@ -42,33 +45,36 @@ paths:
             application/json:
               schema:
                 type: object
-                example:
-                  message: "success"
-                  data: 
-                      id: 12345
-                      email: "user1@gmail.com"
-                      token: "asd123"
-                      role: "user"
+                $ref: '#/components/schemas/ResponseObject'
+              example:
+                message: "success"
+                data: 
+                    id: 12345
+                    email: "user1@gmail.com"
+                    token: "asd123"
+                    role: "user"
         '400':
           description: Failed login.
           content:
             application/json:
               schema:
                 type: object
-                example: 
-                  status: failed
-                  message: "Bad Request"
-                  data: null
+                $ref: '#/components/responses/400'
+              example: 
+                status: failed
+                message: "Bad Request"
+                data: null
         '401':
           description: Failed login.
           content:
             application/json:
               schema:
                 type: object
-                example: 
-                  status: "failed"
-                  message: "Access token is missing or invalid"
-                  data: null
+                $ref: '#/components/responses/401'
+              example: 
+                status: "failed"
+                message: "Access token is missing or invalid"
+                data: null
         '500':
           $ref: '#/components/responses/500'
 
@@ -188,6 +194,7 @@ paths:
           application/json:
             schema:
               type: object
+              $ref: '#/components/schemas/Users'
               example:
                 name: "Andi"
                 email: "Andi@mail.com"
@@ -936,6 +943,13 @@ components:
       description: "use Token"
 
   schemas:
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
     Users:
       type: object
       properties:
@@ -1110,6 +1124,22 @@ components:
             - Placement
             - Eliminated
             - Graduated
+    ResponseObject:
+      type: object
+      properties:
+        message:
+          type: string
+        data: 
+          type: object
+    ResponseArray:
+      type: object
+      properties:
+        message:
+          type: string
+        data:
+          type: array
+          items: 
+            type: object
 
     ResponseWithoutData:
       type: object
@@ -1119,7 +1149,26 @@ components:
         message:
           type: string
   responses:
-
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ResponseWithoutData'
+          example:
+            message: "login failed, wrong username or password"
+            data: null
+    '401':
+      description: invalid or expired token
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: '#/components/schemas/ResponseWithoutData'
+          example:
+            message: "Bad request"
+            data: null
     '404':
       description: Not Found
       content:
