@@ -44,37 +44,16 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                $ref: '#/components/schemas/ResponseObject'
+                $ref: '#/components/schemas/ResponseLogin'
               example:
-                message: "success"
+                message: "success login"
                 data: 
                     id: 12345
                     email: "user1@gmail.com"
                     token: "asd123"
                     role: "user"
-        '400':
-          description: Failed login.
-          content:
-            application/json:
-              schema:
-                type: object
-                $ref: '#/components/responses/400'
-              example: 
-                status: failed
-                message: "Bad Request"
-                data: null
         '401':
-          description: Failed login.
-          content:
-            application/json:
-              schema:
-                type: object
-                $ref: '#/components/responses/401'
-              example: 
-                status: "failed"
-                message: "Access token is missing or invalid"
-                data: null
+          $ref: '#/components/responses/401'
         '500':
           $ref: '#/components/responses/500'
 
@@ -82,46 +61,46 @@ paths:
     post:
       tags:
         - Users
-      summary: add user
-      description: Menambah data User (register)
+      summary: add user 
+      description: add new user by superadmin
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: object
-              example:
-                name: "budi"
-                email: "budi@mail.com"
-                password: "qwerty"
-                role: user
-                team: academic
+              properties:
+                name: 
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                role:
+                  type: string
+                  enum:
+                    - user
+                    - admin
+            example:
+              name: "budi"
+              email: "budi@mail.com"
+              password: "qwerty"
+              role: user
       responses:
         '201':
           description: Success register new user.
           content:
             application/json:
               schema:
-                type: object
-                example:
-                  status: success
-                  message: "success register new user"
-                  data:
-                    id: 12345
-                    name: budi
-                    email: budi@gmail.com
-                    password: "qwerty"
-
-        '400':
-          description: Register failed.
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  status: "failed"
-                  message: "register failed, semua field harus diisi"
-                  data: null
+                $ref: '#/components/schemas/ResponseNewUser' 
+              example:
+                
+                message: "success register new user"
+                data:
+                  id: 12345
+                  name: budi
+                  email: budi@gmail.com
+                  
         '404':
           $ref: '#/components/responses/404'
                   
@@ -135,47 +114,36 @@ paths:
       description: Show All User Data
       security:
         - JWTAuth: []
-      parameters:
-        - name: key
-          description: ""
-          required: false
-          in: query
-          schema:
-            type: string
-            example: "key"
       responses:
         '200':
           description: A list of users
           content:
             application/json:
               schema:
-                type: object
-                example:
-                  status: "success"
-                  message: "success get all users"
-                  data:
-                    -   id: 1
-                        name: "Budi"
-                        email: "Budi@mail.com"
-                        password: "qwerty"
-                        phone_number: "0822349"
-                        role: "user"
-                        address: "surabaya"
-                        home_address: "jl. sudirman, jember"
-                        team: "placement"
-                        status: "active"
-                        gender: "male"
-                    -   id: 2
-                        name: "Andi"
-                        email: "Andi@mail.com"
-                        password: "qwerty"
-                        phone_number: "0822349"
-                        role: "admin"
-                        address: "surabaya"
-                        home_address: "jl. sudirman, jember"
-                        team: "placement"
-                        status: "active"
-                        gender: "male"
+                $ref: '#/components/schemas/ResponseUsers'
+              example:
+                message: "success get all users"
+                data:
+                  -   id: 1
+                      name: "Budi"
+                      email: "Budi@mail.com"
+                      phone_number: "0822349"
+                      role: "user"
+                      address: "surabaya"
+                      home_address: "jl. sudirman, jember"
+                      team: "placement"
+                      status: "active"
+                      gender: "male"
+                  -   id: 2
+                      name: "Andi"
+                      email: "Andi@mail.com"
+                      phone_number: "0822349"
+                      role: "admin"
+                      address: "surabaya"
+                      home_address: "jl. sudirman, jember"
+                      team: "placement"
+                      status: "active"
+                      gender: "male"
         '404':
           $ref: '#/components/responses/404'
         '500':
@@ -193,41 +161,38 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              $ref: '#/components/schemas/Users'
-              example:
-                name: "Andi"
-                email: "Andi@mail.com"
-                password: "qwerty"
-                phone_number: "0822349"
-                role: "user"
-                address: "surabaya"
-                home_address: "jl. sudirman, jember"
-                team: "placement"
-                status: "active"
-                gender: "male"
+              $ref: '#/components/schemas/UserRequest'
+            example:
+              name: "Andi"
+              email: "Andi@mail.com"
+              password: "qwerty"
+              phone_number: "0822349"
+              role: "user"
+              address: "surabaya"
+              home_address: "jl. sudirman, jember"
+              team: "placement"
+              status: "active"
+              gender: "male"
       responses:
         '200':
           description: Success update user
           content:
             application/json:
               schema:
-                type: object
-                example:
-                  status: "success"
-                  message: "success update users"
-                  data: 
-                    id: 1
-                    name: "Andi"
-                    email: "Andi@mail.com"
-                    password: "qwerty"
-                    phone_number: "0822349"
-                    role: "user"
-                    address: "surabaya"
-                    home_address: "jl. sudirman, jember"
-                    team: "placement"
-                    status: "active"
-                    gender: "male"
+                $ref: '#/components/schemas/ResponseUser'
+              example:
+                message: "success update users"
+                data: 
+                  id: 1
+                  name: "Andi"
+                  email: "Andi@mail.com"
+                  phone_number: "0822349"
+                  role: "user"
+                  address: "surabaya"
+                  home_address: "jl. sudirman, jember"
+                  team: "placement"
+                  status: "active"
+                  gender: "male"
         '404':
           $ref: '#/components/responses/404'
         '500':
@@ -256,9 +221,12 @@ paths:
             application/json:
               schema:
                 type: object
-                example:
-                  status: "success"
-                  message: "success delete user"
+                $ref: '#/components/schemas/ResponseObject'
+                properties:
+                  message:
+                    type: string
+              example:
+                message: "success delete user"
         '404':
           $ref: '#/components/responses/404'
         '500':
@@ -285,17 +253,18 @@ paths:
           application/json:
             schema:
               type: object
-              example:
-                name: "budi"
-                email: "budi@mail.com"
-                password: "qwerty"
-                phone_number: "0822349"
-                role: "user"
-                address: "surabaya"
-                home_address: "jl. sudirman, jember"
-                team: "placement"
-                status: "active"
-                gender: "male"
+              $ref: '#/components/schemas/UserRequest'
+            example:
+              name: "budi"
+              email: "budi@mail.com"
+              password: "qwerty"
+              phone_number: "0822349"
+              role: "user"
+              address: "surabaya"
+              home_address: "jl. sudirman, jember"
+              team: "placement"
+              status: "active"
+              gender: "male"
       responses:
         '200':
           description: Success updet user 
@@ -303,21 +272,20 @@ paths:
             application/json:
               schema:
                 type: object
-                example:
-                  status: "success"
-                  message: "success update user"
-                  data :
-                    id : 2
-                    name: "budi"
-                    email: "budi@mail.com"
-                    password: "qwerty"
-                    phone_number: "0822349"
-                    role: "user"
-                    address: "surabaya"
-                    home_address: "jl. sudirman, jember"
-                    team: "placement"
-                    status: "active"
-                    gender: "male"
+                $ref: '#/components/schemas/ResponseUser'
+              example:
+                message: "success update user"
+                data :
+                  id : 2
+                  name: "budi"
+                  email: "budi@mail.com"
+                  phone_number: "0822349"
+                  role: "user"
+                  address: "surabaya"
+                  home_address: "jl. sudirman, jember"
+                  team: "placement"
+                  status: "active"
+                  gender: "male"
         '404':
           $ref: '#/components/responses/404'
         '500':
@@ -331,23 +299,40 @@ paths:
       description: show all mentee
       security:
         - JWTAuth: []
-    
       responses:
         '200':
           description: A list of mentees
           content:
             application/json:
               schema:
-                type: object
-                example:
-                  status: "success"
-                  message: "success get all mentees"
-                  data:
-                    id: 1
+                $ref: '#/components/schemas/ResponseMentess'
+              example:
+                message: "success get all mentees"
+                data:
+                  - id: 1
                     name: "Budi Sudarsono"
                     nickname: "Budi"
                     gender: "Male"
                     email: "Budi@gmail.com"
+                    phone_number: "081122"
+                    telegram_account: "@budi"
+                    discord_account: "Budi#123"
+                    class: "BE 13"
+                    address: jl. sepakbola, Yogyakarta
+                    home_address: "jl. Sukamaju, Bandung"
+                    status: "placement"
+                    education_type: "Non-IT"
+                    education_major: "IPA"
+                    institution: "SMA 1 Sukamaju"
+                    graduate: "2020"
+                    emergency_contact: "0811122"
+                    emergency_contact_name: "Mawar"
+                    emergency_contact_status: "Orang tua"
+                  - id: 2
+                    name: "Rudi Sudarsono"
+                    nickname: "Rudi"
+                    gender: "Male"
+                    email: "Rudi@gmail.com"
                     phone_number: "081122"
                     telegram_account: "@budi"
                     discord_account: "Budi#123"
@@ -367,66 +352,66 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+    
     post:
       tags:
         - Mentees
       summary: add mentee
-      description: Menambah data mentee 
+      description: add new mentee by user 
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              example:
-                name: "Budi Sudarsono"
-                nickname: "Budi"
-                gender: "Male"
-                email: "Budi@gmail.com"
-                phone_number: "081122"
-                telegram_account: "@budi"
-                discord_account: "Budi#123"
-                class: "BE 13"
-                address: jl. sepakbola, Yogyakarta
-                home_address: "jl. Sukamaju, Bandung"
-                status: "placement"
-                education_type: "Non-IT"
-                education_major: "IPA"
-                institution: "SMA 1 Sukamaju"
-                graduate: "2020"
-                emergency_contact: "0811122"
-                emergency_contact_name: "Mawar"
-                emergency_contact_status: "Orang tua"
+              $ref: '#/components/schemas/MenteeRequest'
+            example:
+              name: "Budi Sudarsono"
+              nickname: "Budi"
+              gender: "Male"
+              email: "Budi@gmail.com"
+              phone_number: "081122"
+              telegram_account: "@budi"
+              discord_account: "Budi#123"
+              class: "BE 13"
+              address: jl. sepakbola, Yogyakarta
+              home_address: "jl. Sukamaju, Bandung"
+              status: "placement"
+              education_type: "Non-IT"
+              education_major: "IPA"
+              institution: "SMA 1 Sukamaju"
+              graduate: "2020"
+              emergency_contact: "0811122"
+              emergency_contact_name: "Mawar"
+              emergency_contact_status: "Orang tua"
       responses:
         '201':
           description: Success add new mentee.
           content:
             application/json:
               schema:
-                type: object
-                example:
-                  status: success
-                  message: "success add new mentee"
-                  data:
-                    id: 1
-                    name: "Budi Sudarsono"
-                    nickname: "Budi"
-                    gender: "Male"
-                    email: "Budi@gmail.com"
-                    phone_number: "081122"
-                    telegram_account: "@budi"
-                    discord_account: "Budi#123"
-                    class: "BE 13"
-                    address: jl. sepakbola, Yogyakarta
-                    home_address: "jl. Sukamaju, Bandung"
-                    status: "placement"
-                    education_type: "Non-IT"
-                    education_major: "IPA"
-                    institution: "SMA 1 Sukamaju"
-                    graduate: "2020"
-                    emergency_contact: "0811122"
-                    emergency_contact_name: "Mawar"
-                    emergency_contact_status: "Orang tua"
+                $ref: '#/components/schemas/ResponseMentee'
+              example:
+                message: "success add new mentee"
+                data:
+                  id: 1
+                  name: "Budi Sudarsono"
+                  nickname: "Budi"
+                  gender: "Male"
+                  email: "Budi@gmail.com"
+                  phone_number: "081122"
+                  telegram_account: "@budi"
+                  discord_account: "Budi#123"
+                  class: "BE 13"
+                  address: jl. sepakbola, Yogyakarta
+                  home_address: "jl. Sukamaju, Bandung"
+                  status: "placement"
+                  education_type: "Non-IT"
+                  education_major: "IPA"
+                  institution: "SMA 1 Sukamaju"
+                  graduate: "2020"
+                  emergency_contact: "0811122"
+                  emergency_contact_name: "Mawar"
+                  emergency_contact_status: "Orang tua"
 
         '400':
           description: Add new mentee failed.
@@ -468,41 +453,43 @@ paths:
             application/json:
               schema:
                 type: object
-                example:
-                  status: "success"
-                  message: "success get spesific mentee"
-                  data:
-                    id: 1
-                    name: "Budi Sudarsono"
-                    nickname: "Budi"
-                    gender: "Male"
-                    email: "Budi@gmail.com"
-                    phone_number: "081122"
-                    telegram_account: "@budi"
-                    discord_account: "Budi#123"
-                    class: "BE 13"
-                    address: jl. sepakbola, Yogyakarta
-                    home_address: "jl. Sukamaju, Bandung"
-                    status: "placement"
-                    education_type: "Non-IT"
-                    education_major: "IPA"
-                    institution: "SMA 1 Sukamaju"
-                    graduate: "2020"
-                    emergency_contact: "0811122"
-                    emergency_contact_name: "Mawar"
-                    emergency_contact_status: "Orang tua"
-                    log: 
-                      id: 1
+                $ref: '#/components/schemas/ResponseArray'
+              example:
+                message: "success get spesific mentee"
+                data:
+                  id: 1
+                  name: "Budi Sudarsono"
+                  nickname: "Budi"
+                  gender: "Male"
+                  email: "Budi@gmail.com"
+                  phone_number: "081122"
+                  telegram_account: "@budi"
+                  discord_account: "Budi#123"
+                  class: "BE 13"
+                  address: jl. sepakbola, Yogyakarta
+                  home_address: "jl. Sukamaju, Bandung"
+                  status: "placement"
+                  education_type: "Non-IT"
+                  education_major: "IPA"
+                  institution: "SMA 1 Sukamaju"
+                  graduate: "2020"
+                  emergency_contact: "0811122"
+                  emergency_contact_name: "Mawar"
+                  emergency_contact_status: "Orang tua"
+                  log: 
+                    - id: 1
                       user_id: "fakhry"
                       notes: "ini notes"
                       status: "interview"
-
+                    - id: 2
+                      user_id: "bagas"
+                      notes: "ini notes"
+                      status: "interview"
 
         '404':
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-
 
     delete:
       tags:
@@ -526,9 +513,9 @@ paths:
             application/json:
               schema:
                 type: object
-                example:
-                  status: "success"
-                  message: "success delete mentee"
+                $ref: '#/components/schemas/ResponseObject'
+              example:
+                message: "success delete mentee"
         '404':
           $ref: '#/components/responses/404'
         '500':
@@ -555,25 +542,26 @@ paths:
           application/json:
             schema:
               type: object
-              example:
-                name: "Andi santoso"
-                nickname: "Andi"
-                gender: "Male"
-                email: "Andi@gmail.com"
-                phone_number: "081122"
-                telegram_account: "@Andi"
-                discord_account: "Andi#123"
-                class: "BE 13"
-                address: jl. sepakbola, Yogyakarta
-                home_address: "jl. Sukamaju, Bandung"
-                status: "placement"
-                education_type: "Non-IT"
-                education_major: "IPA"
-                institution: "SMA 1 Sukamaju"
-                graduate: "2020"
-                emergency_contact: "0811122"
-                emergency_contact_name: "Mawar"
-                emergency_contact_status: "Orang tua"
+              $ref: '#/components/schemas/MenteeRequest' 
+            example:
+              name: "Andi santoso"
+              nickname: "Andi"
+              gender: "Male"
+              email: "Andi@gmail.com"
+              phone_number: "081122"
+              telegram_account: "@Andi"
+              discord_account: "Andi#123"
+              class: "BE 13"
+              address: jl. sepakbola, Yogyakarta
+              home_address: "jl. Sukamaju, Bandung"
+              status: "placement"
+              education_type: "Non-IT"
+              education_major: "IPA"
+              institution: "SMA 1 Sukamaju"
+              graduate: "2020"
+              emergency_contact: "0811122"
+              emergency_contact_name: "Mawar"
+              emergency_contact_status: "Orang tua"
       responses:
         '200':
           description: A list of mentee
@@ -581,29 +569,30 @@ paths:
             application/json:
               schema:
                 type: object
-                example:
-                  status: "success"
-                  message: "success delete users"
-                  data: 
-                    id: 2
-                    name: "Andi santoso"
-                    nickname: "Andi"
-                    gender: "Male"
-                    email: "Andi@gmail.com"
-                    phone_number: "081122"
-                    telegram_account: "@Andi"
-                    discord_account: "Andi#123"
-                    class: "BE 13"
-                    address: jl. sepakbola, Yogyakarta
-                    home_address: "jl. Sukamaju, Bandung"
-                    status: "placement"
-                    education_type: "Non-IT"
-                    education_major: "IPA"
-                    institution: "SMA 1 Sukamaju"
-                    graduate: "2020"
-                    emergency_contact: "0811122"
-                    emergency_contact_name: "Mawar"
-                    emergency_contact_status: "Orang tua"
+                $ref: '#/components/schemas/ResponseMentee'
+              example:
+                status: "success"
+                message: "success delete users"
+                data: 
+                  id: 2
+                  name: "Andi santoso"
+                  nickname: "Andi"
+                  gender: "Male"
+                  email: "Andi@gmail.com"
+                  phone_number: "081122"
+                  telegram_account: "@Andi"
+                  discord_account: "Andi#123"
+                  class: "BE 13"
+                  address: jl. sepakbola, Yogyakarta
+                  home_address: "jl. Sukamaju, Bandung"
+                  status: "placement"
+                  education_type: "Non-IT"
+                  education_major: "IPA"
+                  institution: "SMA 1 Sukamaju"
+                  graduate: "2020"
+                  emergency_contact: "0811122"
+                  emergency_contact_name: "Mawar"
+                  emergency_contact_status: "Orang tua"
         '404':
           $ref: '#/components/responses/404'
         '500':
@@ -625,36 +614,38 @@ paths:
             application/json:
               schema:
                 type: object
-                example:
-                  status: "success"
-                  message: "success get all classes"
-                  data:
-                    id: 1
-                    name: "BE 13"
-                    start_date: "2022-10-24"
-                    graduate_date: "2022-12-31"
-                    mentor: fakhry
+                $ref: '#/components/schemas/ResponseClasses'
+              example:
+                message: "success get all classes"
+                data:
+                  id: 1
+                  name: "BE 13"
+                  start_date: "2022-10-24"
+                  graduate_date: "2022-12-31"
+                  PIC: fakhry
                    
         '404':
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
+    
     post:
       tags:
         - Classes
       summary: add new classes
-      description: Menambah data classes
+      description: add new classes by user
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: object
-              example:
-               name: "BE 13"
-               mentor: 1
-               start_date: "2022-10-24"
-               graduate_date: "2022-12-31"
+              $ref: '#/components/schemas/ClassReq'
+            example:
+              name: "BE 13"
+              user_id: 'fakhry'
+              start_date: "2022-10-24"
+              graduate_date: "2022-12-31"
       responses:
         '201':
           description: Success add new class.
@@ -662,26 +653,15 @@ paths:
             application/json:
               schema:
                 type: object
-                example:
-                  status: success
-                  message: "success add new class"
-                  data: 
-                    id: 1
-                    name: "BE 13"
-                    mentor: fakhry
-                    start_date: "2022-10-24"
-                    graduate_date: "2022-12-31"
-                
-        '400':
-          description: Add new class failed.
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  status: "failed"
-                  message: "failed add new class, semua field harus diisi"
-                  data: null
+                $ref: '#/components/schemas/ResponseClass'
+              example:
+                message: "success add new class"
+                data: 
+                  id: 1
+                  name: "BE 13"
+                  PIC : fakhry
+                  start_date: "2022-10-24"
+                  graduate_date: "2022-12-31"
         '404':
           $ref: '#/components/responses/404'
                   
@@ -711,22 +691,21 @@ paths:
             application/json:
               schema:
                 type: object
-                example:
-                  status: "success"
-                  message: "success get spesific class"
-                  data:
-                    id: 1
-                    name: "BE 13"
-                    mentor: fakhry
-                    start_date: "2022-10-24"
-                    graduate_date: "2022-12-31"
+                $ref: '#/components/schemas/ResponseClass'
+              example:
+                message: "success get spesific class"
+                data:
+                  id: 1
+                  name: "BE 13"
+                  PIC: fakhry
+                  start_date: "2022-10-24"
+                  graduate_date: "2022-12-31"
 
 
         '404':
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-
 
     delete:
       tags:
@@ -750,9 +729,9 @@ paths:
             application/json:
               schema:
                 type: object
-                example:
-                  status: "success"
-                  message: "success delete class"
+                $ref: '#/components/schemas/ResponseObject'
+              example:
+                message: "success delete class"
         '404':
           $ref: '#/components/responses/404'
         '500':
@@ -779,11 +758,12 @@ paths:
           application/json:
             schema:
               type: object
-              example:
-                name: "FE 13"
-                mentor: 4
-                start_date: "2022-10-24"
-                graduate_date: "2022-12-31"
+              $ref: '#/components/schemas/ClassReq'
+            example:
+              name: "FE 13"
+              user_id : "2"
+              start_date: "2022-10-24"
+              graduate_date: "2022-12-31"
       responses:
         '200':
           description: An update class 
@@ -791,21 +771,21 @@ paths:
             application/json:
               schema:
                 type: object
-                example:
-                  status: "success"
-                  message: "success update class"
-                  data:
-                    id: 3 
-                    name: "FE 13"
-                    mentor: Jerry
-                    start_date: "2022-10-24"
-                    graduate_date: "2022-12-31"
+                $ref: '#/components/schemas/ClassResp'
+              example:
+                message: "success update class"
+                data:
+                  id: 3 
+                  name: "FE 13"
+                  PIC: "yoga"
+                  start_date: "2022-10-24"
+                  graduate_date: "2022-12-31"
         '404':
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
 
-  /log:
+  /logs:
     post:
       tags:
         - Logs
@@ -817,11 +797,12 @@ paths:
           application/json:
             schema:
               type: object
-              example:
-                user_id: 2
-                mentee_id: 3
-                notes: "this is the notes related to mentee"
-                status: "placement"
+              $ref: '#/components/schemas/LogReq'
+            example:
+              user_id: 2
+              mentee_id: 3
+              notes: "this is the notes related to mentee"
+              status: "placement"
       responses:
         '201':
           description: Success add new log.
@@ -829,15 +810,16 @@ paths:
             application/json:
               schema:
                 type: object
-                example:
-                  status: success
-                  message: "success add new log"
-                  data: 
-                    id: 1
-                    user_id: "fakhry"
-                    mentee_id: "jojo"
-                    notes: "this is the notes related to mentee"
-                    status: "placement"
+                $ref: '#/components/schemas/ResponseLog'
+              example:
+                message: "success add new log"
+                data: 
+                  id: 1
+                  user_name: "fakhry"
+                  mentee_name: "jojo"
+                  notes: "this is the notes related to mentee"
+                  status: "placement"
+                  created_at: "2022-12-05 17:15:20"
                 
         '400':
           description: Add new mentee failed.
@@ -854,83 +836,7 @@ paths:
                   
         '500':
           $ref: '#/components/responses/500'
-  /log/{log_id}:
-    put:
-      tags:
-        - Logs
-      summary: update log
-      description: Update selected log
-      security:
-        - JWTAuth: []
-      parameters:
-        - name: log_id
-          description: "log id"
-          required: true
-          in: path
-          schema:
-            type: integer
-            example: 1
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              example:
-                user_id: 2
-                mentee_id: 3
-                notes: "this is the notes related to mentee"
-                status: "placement"
-      responses:
-        '200':
-          description: An update log
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  status: "success"
-                  message: "success update log"
-                  data:
-                    id: 1
-                    user_id: fakhry
-                    mentee_id: jojo
-                    notes: "updated log for mentee"
-                    status: "placement"
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'
 
-    delete:
-      tags:
-        - Logs
-      summary: delete log
-      description: delete spesific log
-      security:
-        - JWTAuth: []
-      parameters:
-        - name: log_id
-          description: "log_id"
-          required: true
-          in: path
-          schema:
-            type: integer
-            example: 1
-      responses:
-        '200':
-          description: success delete log
-          content:
-            application/json:
-              schema:
-                type: object
-                example:
-                  status: "success"
-                  message: "success delete log"
-        '404':
-          $ref: '#/components/responses/404'
-        '500':
-          $ref: '#/components/responses/500'
 ####################################
 #  COMPONENTS
 ####################################
@@ -961,6 +867,91 @@ components:
         email:
           type: string
         password:
+          type: string
+          format: password
+        phone_number:
+          type: string
+        role:
+          type: string
+          enum:
+            - Admin
+            - User
+        address:
+          type: string
+        home_address:
+          type: string
+        team:
+          type: string
+          enum:
+            - Academic 
+            - Placement 
+            - People skill
+            - Admission 
+        status:
+          type: string
+          enum:
+            - Active
+            - Non-active
+        gender:
+          type: string
+          enum:
+            - Male
+            - Female
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        deleted_at:
+          type: string
+          format: date-time
+    UserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        phone_number:
+          type: string
+        role:
+          type: string
+          enum:
+            - Admin
+            - User
+        address:
+          type: string
+        home_address:
+          type: string
+        team:
+          type: string
+          enum:
+            - Academic 
+            - Placement 
+            - People skill
+            - Admission 
+        status:
+          type: string
+          enum:
+            - Active
+            - Non-active
+        gender:
+          type: string
+          enum:
+            - Male
+            - Female
+    UserResp:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        email:
           type: string
         phone_number:
           type: string
@@ -1070,7 +1061,92 @@ components:
         deleted_at:
           type: string
           format: date-time
+    MenteeRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        nickname:
+          type: string
+        email:
+          type: string
+        gender:
+          type: string
+          enum:
+            - male
+            - female
+        phone_number:
+          type: string
+        class:
+          type: integer
+          format: int64
+        address:
+          type: string
+        home_address:
+          type: string
+        telegram_account:
+          type: string
+        discord_account:
+          type: string
+        status:
+          type: string
+          enum:
+            - Interview
+            - Join class
+            - Unit 1
+            - Unit 2
+            - Unit 2
+            - Repeat unit 1
+            - Repeat unit 2
+            - Repeat unit 3
+            - Placement
+            - Eliminated
+            - Graduated
+        education_type:
+          type: string
+          enum:
+          - IT
+          - Non-IT
+        education_major:
+          type: string
+        graduateed:
+          type: string
+          format: year
+        institution:
+          type: string
+        emergency_contact:
+          type: string
+        emergency_contact_name:
+          type: string
+        emergency_contact_status:
+          type: string
+        
     Classes:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        PIC:
+          type: string
+        started_date:
+          type: string
+          format: date
+        graduated_date:
+          type: string
+          format: date
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        deleted_at:
+          type: string
+          format: date-time
+    ClassReq:
       type: object
       properties:
         id:
@@ -1087,27 +1163,32 @@ components:
         graduated_date:
           type: string
           format: date
-        created_at:
+    ClassResp:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
           type: string
-          format: date-time
-        updated_at:
+        PIC:
           type: string
-          format: date-time
-        deleted_at:
+        started_date:
           type: string
-          format: date-time
+          format: date
+        graduated_date:
+          type: string
+          format: date
     Logs:
       type: object
       properties:
         id:
           type: integer
           format: int64
-        user_id:  
-          type: integer
-          format: int64
-        mentee_id:  
-          type: integer
-          format: int64
+        user_name:  
+          type: string
+        mentee_name:  
+          type: string
         notes: 
           type: string
         status:
@@ -1124,6 +1205,155 @@ components:
             - Placement
             - Eliminated
             - Graduated
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        deleted_at:
+          type: string
+          format: date-time
+    LogReq:
+      type: object
+      properties:
+        user_id:  
+          type: integer
+          format: int64
+        mentee_id:  
+          type: integer
+          format: int64
+        notes: 
+          type: string
+    LogResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        user_name:  
+          type: string
+        mentee_name:  
+          type: string
+        notes: 
+          type: string
+        status:
+          type: string
+          enum:
+            - Interview
+            - Join class
+            - Unit 1
+            - Unit 2
+            - Unit 2
+            - Repeat unit 1
+            - Repeat unit 2
+            - Repeat unit 3
+            - Placement
+            - Eliminated
+            - Graduated
+        created_at:
+          type: string
+          format: date-time
+    ResponseLog:
+      type: object
+      properties:
+        res:
+          type: object
+          $ref: '#/components/schemas/ResponseObject'
+        data:
+          type: object
+          $ref: '#/components/schemas/LogResponse'
+    ResponseMentee: 
+      type: object
+      properties:
+        res:
+          type: object
+          $ref: '#/components/schemas/ResponseObject'
+        data:
+          type: object
+          $ref: '#/components/schemas/Mentees'
+    
+    
+    ResponseUsers: 
+      type: object
+      properties:
+        res:
+          type: object
+          $ref: '#/components/schemas/ResponseArray'
+        data:
+          type: object
+          $ref: '#/components/schemas/UserResp'
+    ResponseUser: 
+      type: object
+      properties:
+        res:
+          type: object
+          $ref: '#/components/schemas/ResponseObject'
+        data:
+          type: object
+          $ref: '#/components/schemas/UserResp'
+    ResponseNewUser: 
+      type: object
+      properties:
+        res:
+          type: object
+          $ref: '#/components/schemas/ResponseObject'
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            name:
+              type: string
+            email:
+              type: string
+            
+    ResponseLogin:
+      type: object
+      properties:
+        res:
+          type: object
+          $ref: '#/components/schemas/ResponseObject'
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            email:
+              type: string
+            token:
+              type: string
+            role:
+              type: string
+    ResponseMentess:
+      type: object
+      properties:
+        res:
+          type: object
+          $ref: '#/components/schemas/ResponseArray'
+        data:
+          type: object
+          $ref: '#/components/schemas/Mentees'
+    ResponseClasses:
+      type: object
+      properties:
+        res:
+          type: object
+          $ref: '#/components/schemas/ResponseArray'
+        data:
+          type: object
+          $ref: '#/components/schemas/Classes'      
+    ResponseClass: 
+      type: object
+      properties:
+        res:
+          type: object
+          $ref: '#/components/schemas/ResponseObject'
+        data:
+          type: object
+          $ref: '#/components/schemas/ClassResp'
     ResponseObject:
       type: object
       properties:
@@ -1160,14 +1390,14 @@ components:
             message: "login failed, wrong username or password"
             data: null
     '401':
-      description: invalid or expired token
+      description: invalid or expired token, failed login.
       content:
         application/json:
           schema:
             type: object
             $ref: '#/components/schemas/ResponseWithoutData'
           example:
-            message: "Bad request"
+            message: "Access token is missing or invalid. Wrong email or password"
             data: null
     '404':
       description: Not Found
@@ -1192,3 +1422,4 @@ components:
           example:
             message: "internal server error"
             data: null
+
