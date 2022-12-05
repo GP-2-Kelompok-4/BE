@@ -1,15 +1,15 @@
-# FROM golang:1.19
+FROM golang:1.18
 
-# # membuat direktori app
-# RUN mkdir /app
+# membuat direktori app
+RUN mkdir /app
 
-# # set working directory /app
-# WORKDIR /app
+# set working directory /app
+WORKDIR /app
 
-# COPY ./ /app
+COPY ./ /app
 
-# RUN go mod tidy
+RUN go mod tidy
 
-# RUN go build -o immersive-dashboard
+RUN go build -o immersive-dashboard
 
-# CMD ["./immersive-dashboard"]
+CMD ["./immersive-dashboard"]
