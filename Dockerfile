@@ -10,6 +10,6 @@ COPY ./ /app
 
 RUN go mod tidy
 
-RUN go build -o immersive-dashboard
+RUN go build -o main
 
-CMD ["./immersive-dashboard"]
+CMD ["./main"]
