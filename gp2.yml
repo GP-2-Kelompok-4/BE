@@ -63,6 +63,8 @@ paths:
         - Users
       summary: add user 
       description: add new user by superadmin
+      security:
+        - JWTAuth: []
       requestBody:
         required: true
         content:
@@ -358,6 +360,8 @@ paths:
         - Mentees
       summary: add mentee
       description: add new mentee by user 
+      security:
+        - JWTAuth: []
       requestBody:
         required: true
         content:
@@ -634,6 +638,8 @@ paths:
         - Classes
       summary: add new classes
       description: add new classes by user
+      security:
+        - JWTAuth: []
       requestBody:
         required: true
         content:
@@ -791,6 +797,8 @@ paths:
         - Logs
       summary: Add new log 
       description: Add new log for mentees
+      security:
+        - JWTAuth: []
       requestBody:
         required: true
         content:
