@@ -1,4 +1,4 @@
-FROM golang:1.18
+FROM golang:1.19-alpine3.16
 
 # membuat direktori app
 RUN mkdir /app

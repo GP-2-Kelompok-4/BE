@@ -1,8 +1,17 @@
 package main
 
+import (
+	"net/http"
+
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+)
+
 func main() {
-
+	e := echo.New()
+	e.Use(middleware.Logger())
+	e.GET("/hello", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, "hello world")
+	})
+	e.Start(":8000")
 }
-
-// test docker logs
-// test docker logs 2
