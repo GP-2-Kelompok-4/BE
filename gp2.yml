@@ -301,6 +301,34 @@ paths:
       description: show all mentee
       security:
         - JWTAuth: []
+      parameters:
+        - in: query
+          name: "class"
+          schema:
+            type: string
+        - in: query
+          name: "education_type"
+          schema:
+            type: string
+            enum:
+            - IT
+            - Non-IT 
+        - in: query
+          name: "status"
+          schema:
+            type: string
+            enum:
+            - Interview
+            - Join class
+            - Unit 1
+            - Unit 2
+            - Unit 2
+            - Repeat unit 1
+            - Repeat unit 2
+            - Repeat unit 3
+            - Placement
+            - Eliminated
+            - Graduated
       responses:
         '200':
           description: A list of mentees
