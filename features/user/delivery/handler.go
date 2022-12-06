@@ -18,6 +18,7 @@ func New(service user.ServiceInterface, e *echo.Echo) {
 	handler := &UserDelivery{
 		userService: service,
 	}
+
 	e.GET("/users", handler.GetAllUser, middlewares.JWTMiddleware())
 	e.POST("/users", handler.AddUser)
 	e.PUT("/users", handler.UpdateUser, middlewares.JWTMiddleware())
