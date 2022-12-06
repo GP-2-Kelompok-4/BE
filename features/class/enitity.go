@@ -28,8 +28,10 @@ type Mentee struct {
 
 type ServiceInterface interface {
 	CreateClass(data ClassCore) (err error)
+	GetAllClassess() (data []ClassCore, err error)
 }
 
 type RepositoryInterface interface {
 	InsertClass(data ClassCore) (row int, err error)
+	GetAllClassess() (data []ClassCore, err error)
 }

@@ -24,3 +24,9 @@ func (service *classService) CreateClass(data class.ClassCore) (err error) {
 	}
 	return nil
 }
+
+// GetAllClassess implements class.ServiceInterface
+func (service *classService) GetAllClassess() (data []class.ClassCore, err error) {
+	data, err = service.classRepository.GetAllClassess()
+	return
+}

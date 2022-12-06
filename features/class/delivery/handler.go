@@ -43,3 +43,14 @@ func (delivery *classDelivery) Create(c echo.Context) error {
 	}
 	return c.JSON(http.StatusCreated, helper.SuccessWithDataResponse("success add new class", classInput))
 }
+
+func (delivery *classDelivery) GetAll(c echo.Context) error {
+	results, err := delivery.classService.GetAllClassess()
+	if err != nil {
+		return c.JSON(http.StatusNotFound, helper.FailedResponse("requested resource was not found"))
+	}
+
+	dataResponse := fromCoreList(results)
+
+	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("success get all classes", dataResponse))
+}
