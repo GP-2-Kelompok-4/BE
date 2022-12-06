@@ -7,7 +7,8 @@ servers:
   # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/ACHMADQIZWINI4_1/Immersive-Dashboard-Project/1.0.0
-
+  - description: Group 4 servers
+    url: http://54.89.143.211
 tags:
   - name: Authentication
     description: "authentication"
