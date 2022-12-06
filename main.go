@@ -1,19 +1,26 @@
 package main
 
 import (
-	"net/http"
+	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/config"
+	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/factory"
+	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/utils/database/mysql"
+
+	"fmt"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
+	cfg := config.GetConfig()
+	db := mysql.InitDB(cfg)
+	mysql.MigrateDB(db)
+
 	e := echo.New()
 	e.Use(middleware.Logger())
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.CORS())
-	e.GET("/hello", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, "hello world")
-	})
-	e.Start(":8000")
+	factory.InitFactory(e, db)
+
+	e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", cfg.SERVER_PORT)))
 }
