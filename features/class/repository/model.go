@@ -8,7 +8,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type ClassModel struct {
+type Class struct {
 	gorm.Model
 	Name         string
 	StartDate    time.Time
@@ -41,13 +41,13 @@ type Mentee struct {
 type User struct {
 	gorm.Model
 	Name  string
-	Class []ClassModel
+	Class []Class
 }
 
 //from core to model
 
-func fromCore(dataCore class.ClassCore) ClassModel {
-	userGorm := ClassModel{
+func fromCore(dataCore class.ClassCore) Class {
+	userGorm := Class{
 		Name:         dataCore.Name,
 		StartDate:    dataCore.StartDate,
 		GraduateDate: dataCore.GraduateDate,
@@ -58,7 +58,7 @@ func fromCore(dataCore class.ClassCore) ClassModel {
 
 //from model to core
 
-func (dataModel *ClassModel) toCore() class.ClassCore {
+func (dataModel *Class) toCore() class.ClassCore {
 	return class.ClassCore{
 		ID:           dataModel.ID,
 		Name:         dataModel.Name,
@@ -70,7 +70,7 @@ func (dataModel *ClassModel) toCore() class.ClassCore {
 	}
 }
 
-func toCoreList(dataModel []ClassModel) []class.ClassCore {
+func toCoreList(dataModel []Class) []class.ClassCore {
 	var dataCore []class.ClassCore
 	for _, v := range dataModel {
 		dataCore = append(dataCore, v.toCore())
