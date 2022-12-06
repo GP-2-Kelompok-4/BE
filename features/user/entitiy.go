@@ -23,7 +23,7 @@ type ServiceInterface interface {
 	AddUser(input Core) (err error)
 	UpdateUser(input Core, id int) (err error)
 	DeleteUser(id int) (err error)
-	// UpdateById(id int) (data Core, err error)
+	UpdateById(input Core, id int) (err error)
 }
 
 type RepositoryInterface interface {
@@ -31,5 +31,5 @@ type RepositoryInterface interface {
 	AddUser(input Core) (row int, err error)
 	UpdateUser(input Core, id int) (err error)
 	DeleteUser(id int) (err error)
-	// UpdateById(id int) (data Core, err error)
+	UpdateById(input Core, id int) (err error)
 }
