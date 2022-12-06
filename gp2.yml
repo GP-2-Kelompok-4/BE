@@ -1196,10 +1196,8 @@ components:
           format: int64
         started_date:
           type: string
-          format: date
         graduated_date:
           type: string
-          format: date
     ClassResp:
       type: object
       properties:
