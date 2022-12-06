@@ -16,20 +16,6 @@ func New(repo user.RepositoryInterface) user.ServiceInterface {
 	}
 }
 
-func (service *userService) Login(data user.Core) (string, error) {
-	if data.Email == "" || data.Password == "" {
-		return "", errors.New("data input ada yang kosong")
-	}
-
-	token, err := service.userRepository.Login(data)
-	if err != nil {
-		return "", err
-	}
-
-	return token, err
-
-}
-
 func (service *userService) GetAllUser() (data []user.Core, err error) {
 	data, err = service.userRepository.GetAllUser()
 	return
