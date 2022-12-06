@@ -649,7 +649,7 @@ paths:
               $ref: '#/components/schemas/ClassReq'
             example:
               name: "BE 13"
-              user_id: 'fakhry'
+              user_id: 1
               start_date: "2022-10-24"
               graduate_date: "2022-12-31"
       responses:
