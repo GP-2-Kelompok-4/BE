@@ -30,3 +30,9 @@ func (service *classService) GetAllClassess() (data []class.ClassCore, err error
 	data, err = service.classRepository.GetAllClassess()
 	return
 }
+
+// GetClassById implements class.ServiceInterface
+func (service *classService) GetClassById(id uint) (data class.ClassCore, err error) {
+	data, err = service.classRepository.GetClassById(id)
+	return
+}

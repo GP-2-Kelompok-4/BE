@@ -1,7 +1,7 @@
 package delivery
 
 import (
-	// "strconv"
+	"strconv"
 
 	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/class"
 	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/utils/helper"
@@ -22,14 +22,16 @@ func New(service class.ServiceInterface, e *echo.Echo) {
 	}
 
 	e.POST("/classes", handler.Create, middlewares.JWTMiddleware())
+	e.GET("/classes", handler.GetAll, middlewares.JWTMiddleware())
+	e.GET("/classes/:id", handler.GetClassById, middlewares.JWTMiddleware())
 
 }
 
 func (delivery *classDelivery) Create(c echo.Context) error {
-	userLogin := middlewares.ExtractTokenUserId(c)
-	if userLogin == 0 {
-		return c.JSON(http.StatusNotFound, helper.FailedResponse("requested resource was not found"))
-	}
+	// userLogin := middlewares.ExtractTokenUserId(c)
+	// if userLogin == 0 {
+	// 	return c.JSON(http.StatusNotFound, helper.FailedResponse("requested resource was not found"))
+	// }
 	classInput := ClassRequest{}
 	errBind := c.Bind(&classInput)
 	if errBind != nil {
@@ -53,4 +55,16 @@ func (delivery *classDelivery) GetAll(c echo.Context) error {
 	dataResponse := fromCoreList(results)
 
 	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("success get all classes", dataResponse))
+}
+
+func (delivery *classDelivery) GetClassById(c echo.Context) error {
+	idParam, _ := strconv.Atoi(c.Param("id"))
+	result, err := delivery.classService.GetClassById(uint(idParam))
+	if err != nil {
+		return c.JSON(http.StatusNotFound, helper.FailedResponse("requested resource was not found"))
+
+	}
+	dataResponse := fromCore(result)
+
+	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("success get spesific class", dataResponse))
 }

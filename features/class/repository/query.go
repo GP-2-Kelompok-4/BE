@@ -41,3 +41,15 @@ func (repo *userRepository) GetAllClassess() (data []class.ClassCore, err error)
 	var dataCore = toCoreList(classes)
 	return dataCore, nil
 }
+
+// GetClassById implements class.RepositoryInterface
+func (repo *userRepository) GetClassById(id uint) (data class.ClassCore, err error) {
+	var class Class
+
+	tx := repo.db.First(&class, id)
+	if tx.Error != nil {
+		return data, tx.Error
+	}
+	data = class.toCore()
+	return data, nil
+}
