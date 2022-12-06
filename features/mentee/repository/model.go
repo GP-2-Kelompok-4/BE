@@ -1,9 +1,13 @@
-package mentee
+package repository
 
-import "time"
+import (
+	"time"
 
-type MenteeCore struct {
-	ID                     uint
+	"gorm.io/gorm"
+)
+
+type Mentee struct {
+	gorm.Model
 	Name                   string
 	Nickname               string
 	Email                  string
@@ -20,13 +24,14 @@ type MenteeCore struct {
 	Institution            string
 	EmergencyContact       string
 	EmergencyContactStatus string
-	CreatedAt              time.Time
-	UpdatedAt              time.Time
-	DeletedAt              time.Time
+	ClassID                uint
 }
 
-type ServiceInterface interface {
-}
-
-type RepositoryInterface interface {
+type Class struct {
+	gorm.Model
+	Name          string
+	StartDate     time.Time
+	GraduatedDate time.Time
+	UserID        uint
+	Mentee        []Mentee
 }

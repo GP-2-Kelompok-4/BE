@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"time"
+
 	_user "github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/user"
 	"gorm.io/gorm"
 )
@@ -17,6 +19,14 @@ type User struct {
 	Team         string
 	Status       string
 	Gender       string
+}
+
+type Class struct {
+	gorm.Model
+	Name          string
+	StartDate     time.Time
+	GraduatedDate time.Time
+	UserID        uint
 }
 
 func fromCore(dataCore _user.Core) User {

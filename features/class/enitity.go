@@ -5,12 +5,12 @@ import (
 	"time"
 )
 
-type Core struct {
+type ClassCore struct {
 	ID            uint
 	Name          string
 	StartDate     time.Time
 	GraduatedDate time.Time
-	UserId        uint
+	UserID        uint
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
 	DeletedAt     time.Time
