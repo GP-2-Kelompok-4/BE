@@ -21,6 +21,7 @@ func New(service user.ServiceInterface, e *echo.Echo) {
 
 	e.GET("/users", handler.GetAllUser, middlewares.JWTMiddleware())
 	e.POST("/users", handler.AddUser)
+	e.POST("/users", handler.UpdateUser, middlewares.JWTMiddleware())
 }
 
 func (delivery *UserDelivery) GetAllUser(c echo.Context) error {
@@ -46,7 +47,7 @@ func (delivery *UserDelivery) AddUser(c echo.Context) error {
 	return c.JSON(http.StatusOK, helper.SuccessResponse("success create new users"))
 }
 
-func (delivery *UserDelivery) UpdateData(c echo.Context) error {
+func (delivery *UserDelivery) UpdateUser(c echo.Context) error {
 	id := middlewares.ExtractTokenUserId(c)
 
 	userInput := UserRequest{}
