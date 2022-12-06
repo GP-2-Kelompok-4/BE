@@ -18,8 +18,6 @@ func New(service user.ServiceInterface, e *echo.Echo) {
 	handler := &UserDelivery{
 		userService: service,
 	}
-
-	e.POST("/login", handler.Login)
 	e.GET("/users", handler.GetAllUser, middlewares.JWTMiddleware())
 	e.POST("/users", handler.AddUser)
 	e.PUT("/users", handler.UpdateUser, middlewares.JWTMiddleware())
@@ -78,10 +76,10 @@ func (delivery *UserDelivery) DeleteUser(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, helper.BadRequest(errConv.Error()))
 	}
 
-	roleToken := middlewares.ExtractTokenUserRole(c)
-	if roleToken != "admin" {
-		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("Data can be seen by admin"))
-	}
+	// roleToken := middlewares.ExtractTokenUserRole(c)
+	// if roleToken != "admin" {
+	// 	return c.JSON(http.StatusUnauthorized, helper.FailedResponse("Data can be seen by admin"))
+	// }
 
 	errDel := delivery.userService.DeleteUser(id)
 	if errDel != nil {
@@ -97,10 +95,10 @@ func (delivery *UserDelivery) UpdateById(c echo.Context) error {
 	if errConv != nil {
 		return c.JSON(http.StatusBadRequest, helper.BadRequest(errConv.Error()))
 	}
-	roleToken := middlewares.ExtractTokenUserRole(c)
-	if roleToken != "admin" {
-		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("update data only by admin"))
-	}
+	// roleToken := middlewares.ExtractTokenUserRole(c)
+	// if roleToken != "admin" {
+	// 	return c.JSON(http.StatusUnauthorized, helper.FailedResponse("update data only by admin"))
+	// }
 
 	userInput := UserRequest{}
 	errBind := c.Bind(&userInput)
