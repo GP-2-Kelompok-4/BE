@@ -19,12 +19,19 @@ func New(service user.ServiceInterface, e *echo.Echo) {
 		userService: service,
 	}
 
+	e.POST("/login", handler.Login)
 	e.GET("/users", handler.GetAllUser, middlewares.JWTMiddleware())
 	e.POST("/users", handler.AddUser)
-	e.POST("/users", handler.UpdateUser, middlewares.JWTMiddleware())
+	e.PUT("/users", handler.UpdateUser, middlewares.JWTMiddleware())
 	e.DELETE("/users/:id", handler.DeleteUser, middlewares.JWTMiddleware())
+	e.PUT("/users/:id", handler.UpdateById, middlewares.JWTMiddleware())
+
 }
 
+func (delivery *UserDelivery) Login(c echo.Context) error {
+
+	return nil
+}
 func (delivery *UserDelivery) GetAllUser(c echo.Context) error {
 	results, err := delivery.userService.GetAllUser()
 	if err != nil {
