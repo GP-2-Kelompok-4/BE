@@ -18,10 +18,12 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
+            sudo chmod 777 /var/run/docker.sock
             cd /home/ubuntu/group_project/BE
             git pull origin main
             docker stop gp2Container
             docker rm gp2Container
+            docker rmi immersive-dashboard-images:latest
             docker build -t immersive-dashboard-images:latest .
             docker run -d -p 80:8080 -e SERVER_PORT=${{ secrets.SERVER_PORT }} -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e DB_HOST=${{ secrets.DB_HOST }} -e DB_PORT=${{ secrets.DB_PORT }} -e DB_NAME=${{ secrets.DB_NAME }} --name gp2Container immersive-dashboard-images:latest
 
