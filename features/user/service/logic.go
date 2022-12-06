@@ -46,3 +46,12 @@ func (service *userService) DeleteUser(id int) (err error) {
 	}
 	return nil
 }
+
+func (service *userService) UpdateById(dataCore user.Core, id int) (err error) {
+	errUpdate := service.userRepository.UpdateById(dataCore, id)
+	if errUpdate != nil {
+		return errors.New("failed update data, error query")
+	}
+	return nil
+
+}

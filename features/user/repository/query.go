@@ -65,3 +65,15 @@ func (repo *userRepository) DeleteUser(id int) (err error) {
 	}
 	return nil
 }
+
+func (repo *userRepository) UpdateById(datacore user.Core, id int) (err error) {
+	userGorm := fromCore(datacore)
+	tx := repo.db.Where("id= ?", id).Updates(userGorm)
+	if tx.Error != nil {
+		return tx.Error
+	}
+	if tx.RowsAffected == 0 {
+		return errors.New("update user failed")
+	}
+	return nil
+}

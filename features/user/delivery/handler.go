@@ -22,6 +22,7 @@ func New(service user.ServiceInterface, e *echo.Echo) {
 	e.GET("/users", handler.GetAllUser, middlewares.JWTMiddleware())
 	e.POST("/users", handler.AddUser)
 	e.POST("/users", handler.UpdateUser, middlewares.JWTMiddleware())
+	e.DELETE("/users/:id", handler.DeleteUser, middlewares.JWTMiddleware())
 }
 
 func (delivery *UserDelivery) GetAllUser(c echo.Context) error {
@@ -70,6 +71,11 @@ func (delivery *UserDelivery) DeleteUser(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, helper.BadRequest(errConv.Error()))
 	}
 
+	roleToken := middlewares.ExtractTokenUserRole(c)
+	if roleToken != "admin" {
+		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("Data can be seen by admin"))
+	}
+
 	errDel := delivery.userService.DeleteUser(id)
 	if errDel != nil {
 		return c.JSON(http.StatusBadRequest, helper.FailedResponse("error delete user"+errDel.Error()))
@@ -77,4 +83,28 @@ func (delivery *UserDelivery) DeleteUser(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, helper.SuccessResponse("success delete data"))
 
+}
+
+func (delivery *UserDelivery) UpdateById(c echo.Context) error {
+	id, errConv := strconv.Atoi(c.Param("id"))
+	if errConv != nil {
+		return c.JSON(http.StatusBadRequest, helper.BadRequest(errConv.Error()))
+	}
+	roleToken := middlewares.ExtractTokenUserRole(c)
+	if roleToken != "admin" {
+		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("update data only by admin"))
+	}
+
+	userInput := UserRequest{}
+	errBind := c.Bind(&userInput)
+	if errBind != nil {
+		return c.JSON(http.StatusBadRequest, helper.FailedResponse("Error binding data "+errBind.Error()))
+	}
+
+	dataCore := requestToCore(userInput)
+	errUpt := delivery.userService.UpdateById(dataCore, id)
+	if errUpt != nil {
+		return c.JSON(http.StatusBadRequest, helper.FailedResponse("Error Db update "+errUpt.Error()))
+	}
+	return c.JSON(http.StatusOK, helper.SuccessResponse("success update data"))
 }
