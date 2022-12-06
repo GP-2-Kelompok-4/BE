@@ -10,7 +10,7 @@ type Core struct {
 	Phone_Number string
 	Role         string
 	Address      string
-	Home_Adress  string
+	Home_Address string
 	Team         string
 	Status       string
 	Gender       string
@@ -21,7 +21,7 @@ type Core struct {
 
 type ServiceInterface interface {
 	// GetAll() (data []Core, err error)
-	AddUser(input Core) (row int, err error)
+	AddUser(input Core) (err error)
 	// DeleteUser(id int) (err error)
 	// UpdateUser(input Core, id int) (err error)
 	// UpdateById(id int) (data Core, err error)
