@@ -16,10 +16,33 @@ func New(repo user.RepositoryInterface) user.ServiceInterface {
 	}
 }
 
+func (service *userService) GetAllUser() (data []user.Core, err error) {
+	data, err = service.userRepository.GetAllUser()
+	return
+
+}
+
 func (service *userService) AddUser(input user.Core) (err error) {
 	_, errCreate := service.userRepository.AddUser(input)
 	if errCreate != nil {
 		return errors.New("failed insert data, error query")
+	}
+	return nil
+}
+
+func (service *userService) UpdateUser(dataCore user.Core, id int) (err error) {
+	errUpdate := service.userRepository.UpdateUser(dataCore, id)
+	if errUpdate != nil {
+		return errors.New("failed update data, error query")
+	}
+	return nil
+
+}
+
+func (service *userService) DeleteUser(id int) (err error) {
+	errDel := service.userRepository.DeleteUser(id)
+	if errDel != nil {
+		return errors.New("failed delete user, error query")
 	}
 	return nil
 }
