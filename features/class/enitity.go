@@ -6,18 +6,30 @@ import (
 )
 
 type ClassCore struct {
-	ID            uint
-	Name          string
-	StartDate     time.Time
-	GraduatedDate time.Time
-	UserID        uint
-	CreatedAt     time.Time
-	UpdatedAt     time.Time
-	DeletedAt     time.Time
+	ID           uint
+	Name         string
+	StartDate    time.Time
+	GraduateDate time.Time
+	UserID       uint
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
+	DeletedAt    time.Time
+}
+
+type User struct {
+	ID   uint
+	Name string
+}
+
+type Mentee struct {
+	ID   uint
+	Name string
 }
 
 type ServiceInterface interface {
+	CreateClass(data ClassCore) (err error)
 }
 
 type RepositoryInterface interface {
+	InsertClass(data ClassCore) (row int, err error)
 }
