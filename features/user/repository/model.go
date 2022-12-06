@@ -19,6 +19,7 @@ type User struct {
 	Team         string
 	Status       string
 	Gender       string
+	Log          []Log
 }
 
 type Class struct {
@@ -27,6 +28,14 @@ type Class struct {
 	StartDate     time.Time
 	GraduatedDate time.Time
 	UserID        uint
+}
+
+type Log struct {
+	gorm.Model
+	UserID   uint
+	MenteeID uint
+	Notes    string
+	Status   string
 }
 
 func fromCore(dataCore _user.Core) User {
