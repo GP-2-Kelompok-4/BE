@@ -31,7 +31,7 @@ func InitDB(cfg *config.AppConfig) *gorm.DB {
 
 func MigrateDB(db *gorm.DB) {
 	db.AutoMigrate(&userRepo.User{})
-	db.AutoMigrate(&classRepo.Class{})
+	db.AutoMigrate(&classRepo.ClassModel{})
 	db.AutoMigrate(&menteeRepo.Mentee{})
 	db.AutoMigrate(&logRepo.Log{})
 }

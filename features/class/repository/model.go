@@ -8,13 +8,13 @@ import (
 	"gorm.io/gorm"
 )
 
-type Class struct {
+type ClassModel struct {
 	gorm.Model
-	Name          string
-	StartDate     time.Time
-	GraduatedDate time.Time
-	UserID        uint
-	Mentee        []Mentee
+	Name         string
+	StartDate    time.Time
+	GraduateDate time.Time
+	UserID       uint
+	Mentee       []Mentee
 }
 
 type Mentee struct {
@@ -40,46 +40,37 @@ type Mentee struct {
 
 type User struct {
 	gorm.Model
-	Name         string
-	Email        string
-	Password     string
-	Phone_Number string
-	Role         string
-	Address      string
-	Home_Address string
-	Team         string
-	Status       string
-	Gender       string
-	Class        []Class
+	Name  string
+	Class []ClassModel
 }
 
 //from core to model
 
-func fromCore(dataCore class.ClassCore) Class {
-	userGorm := Class{
-		Name:          dataCore.Name,
-		StartDate:     dataCore.StartDate,
-		GraduatedDate: dataCore.GraduatedDate,
-		UserID:        dataCore.UserID,
+func fromCore(dataCore class.ClassCore) ClassModel {
+	userGorm := ClassModel{
+		Name:         dataCore.Name,
+		StartDate:    dataCore.StartDate,
+		GraduateDate: dataCore.GraduateDate,
+		UserID:       dataCore.UserID,
 	}
 	return userGorm
 }
 
 //from model to core
 
-func (dataModel *Class) toCore() class.ClassCore {
+func (dataModel *ClassModel) toCore() class.ClassCore {
 	return class.ClassCore{
-		ID:            dataModel.ID,
-		Name:          dataModel.Name,
-		StartDate:     dataModel.StartDate,
-		GraduatedDate: dataModel.GraduatedDate,
-		UserID:        dataModel.UserID,
-		CreatedAt:     dataModel.CreatedAt,
-		UpdatedAt:     dataModel.UpdatedAt,
+		ID:           dataModel.ID,
+		Name:         dataModel.Name,
+		StartDate:    dataModel.StartDate,
+		GraduateDate: dataModel.GraduateDate,
+		UserID:       dataModel.UserID,
+		CreatedAt:    dataModel.CreatedAt,
+		UpdatedAt:    dataModel.UpdatedAt,
 	}
 }
 
-func toCoreList(dataModel []Class) []class.ClassCore {
+func toCoreList(dataModel []ClassModel) []class.ClassCore {
 	var dataCore []class.ClassCore
 	for _, v := range dataModel {
 		dataCore = append(dataCore, v.toCore())
