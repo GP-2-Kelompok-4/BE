@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/auth"
+	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/middlewares"
 	"gorm.io/gorm"
 )
 
@@ -19,15 +20,19 @@ func New(db *gorm.DB) auth.RepositoryInterface {
 
 func (repo *authData) Login(email, password string) (loginData auth.Core, err error) {
 
-	var userData = User{}
+	var userData User
 	tx := repo.db.Where("email = ? AND password = ?", email, password).First(&userData)
 	if tx.Error != nil {
-		return loginData, tx.Error
+		return "", tx.Error
 	}
 	if tx.RowsAffected == 0 {
-		return loginData, errors.New("login failed")
+		return "", errors.New("login failed")
 	}
-	loginData = ToCore(userData)
 
-	return loginData, nil
+	token, errToken := middlewares.CreateToken(int(userData.ID), userData.Role)
+	if errToken != nil {
+		return "", errToken
+	}
+
+	return token, nil
 }
