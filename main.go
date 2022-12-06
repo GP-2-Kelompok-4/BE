@@ -10,6 +10,8 @@ import (
 func main() {
 	e := echo.New()
 	e.Use(middleware.Logger())
+	e.Pre(middleware.RemoveTrailingSlash())
+	e.Use(middleware.CORS())
 	e.GET("/hello", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, "hello world")
 	})
