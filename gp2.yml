@@ -1233,6 +1233,20 @@ components:
           format: int64
         notes: 
           type: string
+        status:
+          type: string
+          enum:
+            - Interview
+            - Join class
+            - Unit 1
+            - Unit 2
+            - Unit 2
+            - Repeat unit 1
+            - Repeat unit 2
+            - Repeat unit 3
+            - Placement
+            - Eliminated
+            - Graduated
     LogResponse:
       type: object
       properties:
