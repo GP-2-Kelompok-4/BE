@@ -5,7 +5,10 @@ import (
 	"log"
 
 	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/config"
-	// userRepo "github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/user/repository"
+	classRepo "github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/class/repository"
+	logRepo "github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/log/repository"
+	menteeRepo "github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/mentee/repository"
+	userRepo "github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/user/repository"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -27,8 +30,8 @@ func InitDB(cfg *config.AppConfig) *gorm.DB {
 }
 
 func MigrateDB(db *gorm.DB) {
-	// db.AutoMigrate(&userRepo.User{})
-	// db.AutoMigrate(&userRepo.Class{})
-	// db.AutoMigrate(&userRepo.Mentee{})
-	// db.AutoMigrate(&userRepo.Log{})
+	db.AutoMigrate(&userRepo.User{})
+	db.AutoMigrate(&classRepo.Class{})
+	db.AutoMigrate(&menteeRepo.Mentee{})
+	db.AutoMigrate(&logRepo.Log{})
 }
