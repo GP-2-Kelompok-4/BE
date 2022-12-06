@@ -19,7 +19,6 @@ type Core struct {
 }
 
 type ServiceInterface interface {
-	Login(data Core) (token string, err error)
 	GetAllUser() (data []Core, err error)
 	AddUser(input Core) (err error)
 	UpdateUser(input Core, id int) (err error)
@@ -28,7 +27,6 @@ type ServiceInterface interface {
 }
 
 type RepositoryInterface interface {
-	Login(data Core) (token string, err error)
 	GetAllUser() (data []Core, err error)
 	AddUser(input Core) (row int, err error)
 	UpdateUser(input Core, id int) (err error)

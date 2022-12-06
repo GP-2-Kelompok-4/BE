@@ -4,8 +4,6 @@ import (
 	"errors"
 
 	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/user"
-	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/middlewares"
-	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
@@ -18,43 +16,6 @@ func New(db *gorm.DB) user.RepositoryInterface {
 	return &userRepository{
 		db: db,
 	}
-}
-
-func HashPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
-	return string(bytes), err
-}
-
-func CheckPasswordHash(password, hash string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
-	return err == nil
-}
-
-func (repo *userRepository) Login(data user.Core) (string, error) {
-	var userData User
-	tx := repo.db.Where("email = ?", data.Email).First(&userData)
-
-	check_result := CheckPasswordHash(data.Password, userData.Password)
-
-	if !check_result {
-		return "", errors.New("password salah")
-	}
-
-	if tx.Error != nil {
-		return "", tx.Error
-	}
-
-	if tx.RowsAffected != 1 {
-		return "", errors.New("login failed")
-	}
-
-	token, errToken := middlewares.CreateToken(int(userData.ID), userData.Role)
-	if errToken != nil {
-		return "", errToken
-	}
-
-	return token, nil
-
 }
 
 func (repo *userRepository) GetAllUser() (data []user.Core, err error) {
