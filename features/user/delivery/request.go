@@ -30,3 +30,8 @@ func requestToCore(userInput UserRequest) user.Core {
 	}
 	return userCoreData
 }
+
+type LoginRequest struct {
+	Email    string `json:"email" form:"email"`
+	Password string `json:"password" form:"password"`
+}
