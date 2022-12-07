@@ -30,7 +30,7 @@ func (service *userService) AddUser(input user.Core) (err error) {
 	return nil
 }
 
-func (service *userService) UpdateUser(dataCore user.Core, id int) (err error) {
+func (service *userService) UpdateUser(dataCore user.Core, id uint) (err error) {
 	errUpdate := service.userRepository.UpdateUser(dataCore, id)
 	if errUpdate != nil {
 		return errors.New("failed update data, error query")
@@ -39,7 +39,7 @@ func (service *userService) UpdateUser(dataCore user.Core, id int) (err error) {
 
 }
 
-func (service *userService) DeleteUser(id int) (err error) {
+func (service *userService) DeleteUser(id uint) (err error) {
 	errDel := service.userRepository.DeleteUser(id)
 	if errDel != nil {
 		return errors.New("failed delete user, error query")
@@ -47,7 +47,7 @@ func (service *userService) DeleteUser(id int) (err error) {
 	return nil
 }
 
-func (service *userService) UpdateById(dataCore user.Core, id int) (err error) {
+func (service *userService) UpdateById(dataCore user.Core, id uint) (err error) {
 	errUpdate := service.userRepository.UpdateById(dataCore, id)
 	if errUpdate != nil {
 		return errors.New("failed update data, error query")
