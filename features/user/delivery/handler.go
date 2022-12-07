@@ -51,6 +51,7 @@ func (delivery *UserDelivery) AddUser(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("failed insert data"+err.Error()))
 	}
+	// data := AddFromCore(dataCore)
 	return c.JSON(http.StatusOK, helper.SuccessResponse("success create new users"))
 }
 
