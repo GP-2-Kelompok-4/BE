@@ -12,7 +12,9 @@ type CoreLog struct {
 }
 
 type ServiceInterface interface {
+	CreateLog(data CoreLog) (err error)
 }
 
 type RepositoryInterface interface {
+	CreateLog(data CoreLog) (err error)
 }

@@ -29,8 +29,8 @@ func (handler *AuthHandler) Login(c echo.Context) error {
 	Data, err := handler.authService.Login(reqLogin.Email, reqLogin.Password)
 
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("failed to get token data"+err.Error()))
+		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("failed to get token data "+err.Error()))
 	}
 
-	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("login success", Data))
+	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("login success ", Data))
 }
