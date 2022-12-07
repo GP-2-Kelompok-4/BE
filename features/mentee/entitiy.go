@@ -11,17 +11,18 @@ type MenteeCore struct {
 	Email                  string
 	Gender                 string
 	PhoneNumber            string
+	TelegramAccount        string
+	DiscordAccount         string
 	ClassId                uint
 	Address                string
 	HomeAddress            string
-	TelegramAccount        string
-	DiscordAccount         string
 	Status                 string
 	EducationType          string
 	EducationMajor         string
-	Graduate               time.Time
 	Institution            string
+	Graduate               time.Time
 	EmergencyContact       string
+	EmergencyContactName   string
 	EmergencyContactStatus string
 	LogStruct              Log
 	Class                  Class

@@ -24,6 +24,7 @@ func (repo *menteeRepository) Create(input mentee.MenteeCore) (row int, err erro
 	userGorm := fromCore(input)
 	tx := repo.db.Create(&userGorm)
 	fmt.Println(tx)
+
 	if tx.Error != nil {
 		return -1, tx.Error
 	}
