@@ -1,6 +1,8 @@
 package mentee
 
-import "time"
+import (
+	"time"
+)
 
 type MenteeCore struct {
 	ID                     uint
@@ -9,6 +11,7 @@ type MenteeCore struct {
 	Email                  string
 	Gender                 string
 	PhoneNumber            string
+	ClassId                uint
 	Address                string
 	HomeAddress            string
 	TelegramAccount        string
@@ -20,13 +23,33 @@ type MenteeCore struct {
 	Institution            string
 	EmergencyContact       string
 	EmergencyContactStatus string
-	CreatedAt              time.Time
-	UpdatedAt              time.Time
-	DeletedAt              time.Time
+	LogStruct              Log
+	Class                  Class
+}
+
+type User struct {
+	ID   uint
+	Name string
+}
+
+type Log struct {
+	ID        uint
+	UserId    uint
+	Status    string
+	Notes     string
+	CreatedAt time.Time
+	User      User
+}
+
+type Class struct {
+	ID   uint
+	Name string
 }
 
 type ServiceInterface interface {
+	Create(input MenteeCore) (err error)
 }
 
 type RepositoryInterface interface {
+	Create(input MenteeCore) (row int, err error)
 }
