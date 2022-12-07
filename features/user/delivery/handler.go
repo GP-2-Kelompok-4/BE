@@ -42,7 +42,7 @@ func (delivery *UserDelivery) GetAllUser(c echo.Context) error {
 
 func (delivery *UserDelivery) AddUser(c echo.Context) error {
 	roleToken := middlewares.ExtractTokenUserRole(c)
-	if roleToken != "admin" {
+	if roleToken != "Admin" {
 		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("Data can be seen by admin"))
 	}
 	userInput := UserRequest{}
@@ -58,7 +58,7 @@ func (delivery *UserDelivery) AddUser(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("failed insert data"+err.Error()))
 	}
-	// data := AddFromCore(dataCore)
+
 	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("success create new users", userInput))
 }
 
@@ -85,10 +85,10 @@ func (delivery *UserDelivery) DeleteUser(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, helper.BadRequest(errConv.Error()))
 	}
 
-	// roleToken := middlewares.ExtractTokenUserRole(c)
-	// if roleToken != "admin" {
-	// 	return c.JSON(http.StatusUnauthorized, helper.FailedResponse("Data can be seen by admin"))
-	// }
+	roleToken := middlewares.ExtractTokenUserRole(c)
+	if roleToken != "Admin" {
+		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("Data can be seen by admin"))
+	}
 
 	errDel := delivery.userService.DeleteUser(uint(id))
 	if errDel != nil {
