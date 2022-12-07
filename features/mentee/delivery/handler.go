@@ -22,10 +22,10 @@ func New(service mentee.ServiceInterface, e *echo.Echo) {
 		menteeService: service,
 	}
 
-	e.POST("/mentees", handler.Create, middlewares.JWTMiddleware())
+	e.POST("/mentees", handler.AddMentee, middlewares.JWTMiddleware())
 }
 
-func (delivery *MenteeDelivery) Create(c echo.Context) error {
+func (delivery *MenteeDelivery) AddMentee(c echo.Context) error {
 	menteeInput := MenteeRequest{}
 	errBind := c.Bind(&menteeInput)
 	if errBind != nil {
