@@ -19,7 +19,7 @@ func New(service user.ServiceInterface, e *echo.Echo) {
 		userService: service,
 	}
 
-	e.GET("/users", handler.GetAllUser)
+	e.GET("/users", handler.GetAllUser, middlewares.JWTMiddleware())
 	e.POST("/users", handler.AddUser)
 	e.PUT("/users", handler.UpdateUser, middlewares.JWTMiddleware())
 	e.DELETE("/users/:id", handler.DeleteUser, middlewares.JWTMiddleware())
