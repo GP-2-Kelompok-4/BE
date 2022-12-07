@@ -29,13 +29,13 @@ func (delivery *MenteeDelivery) Create(c echo.Context) error {
 	menteeInput := MenteeRequest{}
 	errBind := c.Bind(&menteeInput)
 	if errBind != nil {
-		return c.JSON(http.StatusBadRequest, helper.FailedResponse("Failed insert data"+errBind.Error()))
+		return c.JSON(http.StatusBadRequest, helper.FailedResponse("Add new mentee, semua field harus diisi"+errBind.Error()))
 	}
 
 	dataCore := toCore(menteeInput)
 	err := delivery.menteeService.Create(dataCore)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("Failed insert data"+err.Error()))
+		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("internal server error"+err.Error()))
 	}
-	return c.JSON(http.StatusCreated, helper.SuccessResponse("success create data"))
+	return c.JSON(http.StatusCreated, helper.SuccessWithDataResponse("success add new mentee", dataCore))
 }
