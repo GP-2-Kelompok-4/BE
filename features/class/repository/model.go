@@ -45,12 +45,12 @@ func fromCore(dataCore class.ClassCore) Class {
 
 //from model to core
 
-func (dataModel *User) toCoreUser() class.User {
-	return class.User{
-		ID:   dataModel.ID,
-		Name: dataModel.Name,
-	}
-}
+// func (dataModel *User) toCoreUser() class.User {
+// 	return class.User{
+// 		ID:   dataModel.ID,
+// 		Name: dataModel.Name,
+// 	}
+// }
 
 func (dataModel *Class) toCore() class.ClassCore {
 	return class.ClassCore{
@@ -59,7 +59,11 @@ func (dataModel *Class) toCore() class.ClassCore {
 		StartDate:    dataModel.StartDate,
 		GraduateDate: dataModel.GraduateDate,
 		UserID:       dataModel.UserID,
-		User:         dataModel.User.toCoreUser(),
+		// User:         dataModel.User.toCoreUser(),
+		User: class.User{
+			ID:   dataModel.User.ID,
+			Name: dataModel.User.Name,
+		},
 	}
 }
 
