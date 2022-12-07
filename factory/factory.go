@@ -17,6 +17,9 @@ import (
 	menteeRepo "github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/mentee/repository"
 	menteeService "github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/mentee/service"
 
+	logDelivery "github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/log/delivery"
+	logRepo "github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/log/repository"
+	logService "github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/log/service"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 )
@@ -38,4 +41,7 @@ func InitFactory(e *echo.Echo, db *gorm.DB) {
 	menteeServiceFactory := menteeService.New(menteeRepoFactory)
 	menteeDelivery.New(menteeServiceFactory, e)
 
+	logRepoFactory := logRepo.New(db)
+	logServiceFactory := logService.New(logRepoFactory)
+	logDelivery.New(logServiceFactory, e)
 }
