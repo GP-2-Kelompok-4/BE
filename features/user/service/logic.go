@@ -23,6 +23,9 @@ func (service *userService) GetAllUser() (data []user.Core, err error) {
 }
 
 func (service *userService) AddUser(input user.Core) (err error) {
+	input.Gender = "Male"
+	input.Team = "Academic"
+	input.Status = "Active"
 	_, errCreate := service.userRepository.AddUser(input)
 	if errCreate != nil {
 		return errors.New("failed insert data, error query")
