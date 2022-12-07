@@ -53,3 +53,16 @@ func (repo *userRepository) GetClassById(id uint) (data class.ClassCore, err err
 	data = class.toCore()
 	return data, nil
 }
+
+// UpdateClass implements class.RepositoryInterface
+func (repo *userRepository) UpdateClass(input class.ClassCore, id uint) (data class.ClassCore, err error) {
+	var class Class
+
+	inputData := fromCore(input)
+	tx := repo.db.Model(&class).Where("id = ?", id).Updates(inputData)
+	if tx.Error != nil {
+		return data, tx.Error
+	}
+	data = class.toCore()
+	return data, nil
+}

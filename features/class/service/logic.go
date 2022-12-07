@@ -36,3 +36,12 @@ func (service *classService) GetClassById(id uint) (data class.ClassCore, err er
 	data, err = service.classRepository.GetClassById(id)
 	return
 }
+
+// UpdateClass implements class.ServiceInterface
+func (service *classService) UpdateClass(input class.ClassCore, id uint) (data class.ClassCore, err error) {
+	data, err = service.classRepository.UpdateClass(input, id)
+	if err != nil {
+		return class.ClassCore{}, errors.New("failed update data, error query")
+	}
+	return data, nil
+}

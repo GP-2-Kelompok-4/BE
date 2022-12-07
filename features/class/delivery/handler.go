@@ -24,6 +24,7 @@ func New(service class.ServiceInterface, e *echo.Echo) {
 	e.POST("/classes", handler.Create, middlewares.JWTMiddleware())
 	e.GET("/classes", handler.GetAll, middlewares.JWTMiddleware())
 	e.GET("/classes/:id", handler.GetClassById, middlewares.JWTMiddleware())
+	e.PUT("classes/:id", handler.UpdateClass, middlewares.JWTMiddleware())
 
 }
 
@@ -67,4 +68,20 @@ func (delivery *classDelivery) GetClassById(c echo.Context) error {
 	dataResponse := fromCore(result)
 
 	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("success get spesific class", dataResponse))
+}
+
+func (delivery *classDelivery) UpdateClass(c echo.Context) error {
+	idParam, _ := strconv.Atoi(c.Param("id"))
+	inputData := ClassRequest{}
+	errBind := c.Bind(&inputData)
+	if errBind != nil {
+		return c.JSON(http.StatusNotFound, helper.FailedResponse("requested resource was not found"+errBind.Error()))
+	}
+
+	dataUpdateCore := toCore(inputData)
+	_, err := delivery.classService.UpdateClass(dataUpdateCore, uint(idParam))
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("internal server error"+err.Error()))
+	}
+	return c.JSON(http.StatusCreated, helper.SuccessWithDataResponse("success update class", dataUpdateCore))
 }
