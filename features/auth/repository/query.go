@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/auth"
+	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/utils/helper"
 	"gorm.io/gorm"
 )
 
@@ -24,6 +25,12 @@ func (repo *authRepo) Login(email, password string) (loginData auth.Core, err er
 	if tx.Error != nil {
 		return loginData, tx.Error
 	}
+	check_result := helper.CheckPasswordHash(password, userModel.Password)
+
+	if !check_result {
+		return loginData, errors.New("password salah")
+	}
+
 	if tx.RowsAffected == 0 {
 		return loginData, errors.New("login failed")
 	}
