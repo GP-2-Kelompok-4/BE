@@ -1,7 +1,6 @@
 package class
 
 import (
-	// "github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/class"
 	"time"
 )
 
@@ -11,9 +10,7 @@ type ClassCore struct {
 	StartDate    time.Time
 	GraduateDate time.Time
 	UserID       uint
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
-	DeletedAt    time.Time
+	User         User
 }
 
 type User struct {
@@ -21,16 +18,20 @@ type User struct {
 	Name string
 }
 
-type Mentee struct {
-	ID   uint
-	Name string
-}
+// type ClassDetailCore struct {
+// 	ID           uint
+// 	Name         string
+// 	StartDate    time.Time
+// 	GraduateDate time.Time
+// 	PIC          string
+// }
 
 type ServiceInterface interface {
 	CreateClass(data ClassCore) (err error)
 	GetAllClassess() (data []ClassCore, err error)
 	GetClassById(id uint) (data ClassCore, err error)
 	UpdateClass(input ClassCore, id uint) (data ClassCore, err error)
+	DeleteClass(id uint) (err error)
 }
 
 type RepositoryInterface interface {
@@ -38,4 +39,5 @@ type RepositoryInterface interface {
 	GetAllClassess() (data []ClassCore, err error)
 	GetClassById(id uint) (data ClassCore, err error)
 	UpdateClass(input ClassCore, id uint) (data ClassCore, err error)
+	DeleteClass(id uint) (err error)
 }

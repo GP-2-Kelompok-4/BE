@@ -14,34 +14,21 @@ type Class struct {
 	StartDate    time.Time
 	GraduateDate time.Time
 	UserID       uint
-	Mentee       []Mentee
-}
-
-type Mentee struct {
-	gorm.Model
-	Name                   string
-	Nickname               string
-	Email                  string
-	Gender                 string
-	PhoneNumber            string
-	Address                string
-	HomeAddress            string
-	TelegramAccount        string
-	DiscordAccount         string
-	Status                 string
-	EducationType          string
-	EducationMajor         string
-	Graduate               time.Time
-	Institution            string
-	EmergencyContact       string
-	EmergencyContactStatus string
-	ClassID                uint
+	User         User
 }
 
 type User struct {
 	gorm.Model
 	Name  string
 	Class []Class
+}
+
+type ClassDetail struct {
+	gorm.Model
+	Name         string
+	StartDate    time.Time
+	GraduateDate time.Time
+	PIC          string
 }
 
 //from core to model
@@ -58,6 +45,13 @@ func fromCore(dataCore class.ClassCore) Class {
 
 //from model to core
 
+func (dataModel *User) toCoreUser() class.User {
+	return class.User{
+		ID:   dataModel.ID,
+		Name: dataModel.Name,
+	}
+}
+
 func (dataModel *Class) toCore() class.ClassCore {
 	return class.ClassCore{
 		ID:           dataModel.ID,
@@ -65,8 +59,7 @@ func (dataModel *Class) toCore() class.ClassCore {
 		StartDate:    dataModel.StartDate,
 		GraduateDate: dataModel.GraduateDate,
 		UserID:       dataModel.UserID,
-		CreatedAt:    dataModel.CreatedAt,
-		UpdatedAt:    dataModel.UpdatedAt,
+		User:         dataModel.User.toCoreUser(),
 	}
 }
 
