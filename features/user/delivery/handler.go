@@ -42,6 +42,9 @@ func (delivery *UserDelivery) GetAllUser(c echo.Context) error {
 
 func (delivery *UserDelivery) AddUser(c echo.Context) error {
 	userInput := UserRequest{}
+	userInput.Gender = "Male"
+	userInput.Team = "Academic"
+	userInput.Status = "Active"
 	errBind := c.Bind(&userInput)
 	if errBind != nil {
 		return c.JSON(http.StatusBadRequest, helper.FailedResponse("Error binding data "+errBind.Error()))
