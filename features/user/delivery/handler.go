@@ -36,8 +36,8 @@ func (delivery *UserDelivery) GetAllUser(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, helper.FailedResponse("error read data"))
 	}
-
-	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("success read all users", FromCoreList(results)))
+	dataRespon := DataUserRespon(results)
+	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("success read all users", dataRespon))
 }
 
 func (delivery *UserDelivery) AddUser(c echo.Context) error {
@@ -52,7 +52,7 @@ func (delivery *UserDelivery) AddUser(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("failed insert data"+err.Error()))
 	}
 	// data := AddFromCore(dataCore)
-	return c.JSON(http.StatusOK, helper.SuccessResponse("success create new users"))
+	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("success create new users", userInput))
 }
 
 func (delivery *UserDelivery) UpdateUser(c echo.Context) error {
