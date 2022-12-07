@@ -9,16 +9,25 @@ import (
 	classRepo "github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/class/repository"
 	classService "github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/class/service"
 
+	authDelivery "github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/auth/delivery"
+	authRepo "github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/auth/repository"
+	authService "github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/auth/service"
+
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 )
 
 func InitFactory(e *echo.Echo, db *gorm.DB) {
+	authRepoFactory := authRepo.New(db)
+	authServiceFactory := authService.New(authRepoFactory)
+	authDelivery.New(authServiceFactory, e)
+
 	userRepoFactory := userRepo.New(db)
-	classRepoFactory := classRepo.New(db)
 	userServiceFactory := userService.New(userRepoFactory)
-	classServiceFactory := classService.New(classRepoFactory)
 	userDelivery.New(userServiceFactory, e)
+
+	classRepoFactory := classRepo.New(db)
+	classServiceFactory := classService.New(classRepoFactory)
 	classDelivery.New(classServiceFactory, e)
 
 }
