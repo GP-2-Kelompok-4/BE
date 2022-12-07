@@ -11,8 +11,8 @@ type ClassResponse struct {
 	Name         string    `json:"name"`
 	StartDate    time.Time `json:"start_date"`
 	GraduateDate time.Time `json:"graduate_date"`
-	UserID       uint      `json:"user_id"`
-	PIC          string    `json:"PIC"`
+	// UserID       uint      `json:"user_id"`
+	PIC string `json:"PIC"`
 }
 
 func fromCore(dataCore class.ClassCore) ClassResponse {
@@ -21,8 +21,8 @@ func fromCore(dataCore class.ClassCore) ClassResponse {
 		Name:         dataCore.Name,
 		StartDate:    dataCore.StartDate,
 		GraduateDate: dataCore.GraduateDate,
-		UserID:       dataCore.UserID,
-		PIC:          dataCore.User.Name,
+		// UserID:       dataCore.UserID,
+		PIC: dataCore.User.Name,
 	}
 }
 
