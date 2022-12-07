@@ -6,7 +6,6 @@ type UserResponse struct {
 	ID           uint
 	Name         string
 	Email        string
-	Password     string
 	Phone_Number string
 	Role         string
 	Address      string
@@ -21,7 +20,6 @@ func FromCore(dataCore user.Core) UserResponse {
 		ID:           dataCore.ID,
 		Name:         dataCore.Name,
 		Email:        dataCore.Email,
-		Password:     dataCore.Password,
 		Phone_Number: dataCore.Phone_Number,
 		Role:         dataCore.Role,
 		Address:      dataCore.Address,
@@ -49,21 +47,21 @@ func AddFromCore(dataCore user.Core) UserResponse {
 	}
 }
 
-func DataUserRespon(users []user.Core) []UserResponse {
-	var dataResponse []UserResponse
-	for _, v := range users {
-		dataResponse = append(dataResponse, UserResponse{
-			ID:           v.ID,
-			Name:         v.Name,
-			Email:        v.Email,
-			Phone_Number: v.Phone_Number,
-			Role:         v.Role,
-			Address:      v.Address,
-			Home_Address: v.Home_Address,
-			Team:         v.Team,
-			Status:       v.Status,
-			Gender:       v.Gender,
-		})
-	}
-	return dataResponse
-}
+// func DataUserRespon(users []user.Core) []UserResponse {
+// 	var dataResponse []UserResponse
+// 	for _, v := range users {
+// 		dataResponse = append(dataResponse, UserResponse{
+// 			ID:           v.ID,
+// 			Name:         v.Name,
+// 			Email:        v.Email,
+// 			Phone_Number: v.Phone_Number,
+// 			Role:         v.Role,
+// 			Address:      v.Address,
+// 			Home_Address: v.Home_Address,
+// 			Team:         v.Team,
+// 			Status:       v.Status,
+// 			Gender:       v.Gender,
+// 		})
+// 	}
+// 	return dataResponse
+// }
