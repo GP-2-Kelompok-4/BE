@@ -48,3 +48,22 @@ func AddFromCore(dataCore user.Core) UserResponse {
 		Email: dataCore.Email,
 	}
 }
+
+func DataUserRespon(users []user.Core) []UserResponse {
+	var dataResponse []UserResponse
+	for _, v := range users {
+		dataResponse = append(dataResponse, UserResponse{
+			ID:           v.ID,
+			Name:         v.Name,
+			Email:        v.Email,
+			Phone_Number: v.Phone_Number,
+			Role:         v.Role,
+			Address:      v.Address,
+			Home_Address: v.Home_Address,
+			Team:         v.Team,
+			Status:       v.Status,
+			Gender:       v.Gender,
+		})
+	}
+	return dataResponse
+}
