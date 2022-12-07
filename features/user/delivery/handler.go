@@ -63,6 +63,7 @@ func (delivery *UserDelivery) AddUser(c echo.Context) error {
 }
 
 func (delivery *UserDelivery) UpdateUser(c echo.Context) error {
+	id := middlewares.ExtractTokenUserId(c)
 
 	userInput := UserRequest{}
 	errBind := c.Bind(&userInput)
@@ -71,7 +72,7 @@ func (delivery *UserDelivery) UpdateUser(c echo.Context) error {
 	}
 
 	dataCore := requestToCore(userInput)
-	errUpt := delivery.userService.UpdateUser(dataCore, id)
+	errUpt := delivery.userService.UpdateUser(dataCore, uint(id))
 	if errUpt != nil {
 		return c.JSON(http.StatusBadRequest, helper.FailedResponse("Error Db update "+errUpt.Error()))
 	}
@@ -89,7 +90,7 @@ func (delivery *UserDelivery) DeleteUser(c echo.Context) error {
 	// 	return c.JSON(http.StatusUnauthorized, helper.FailedResponse("Data can be seen by admin"))
 	// }
 
-	errDel := delivery.userService.DeleteUser(id)
+	errDel := delivery.userService.DeleteUser(uint(id))
 	if errDel != nil {
 		return c.JSON(http.StatusBadRequest, helper.FailedResponse("error delete user"+errDel.Error()))
 	}
@@ -115,7 +116,7 @@ func (delivery *UserDelivery) UpdateById(c echo.Context) error {
 	}
 
 	dataCore := requestToCore(userInput)
-	errUpt := delivery.userService.UpdateById(dataCore, id)
+	errUpt := delivery.userService.UpdateById(dataCore, uint(id))
 	if errUpt != nil {
 		return c.JSON(http.StatusBadRequest, helper.FailedResponse("Error Db update "+errUpt.Error()))
 	}

@@ -41,7 +41,7 @@ func (repo *userRepository) AddUser(input user.Core) (row int, err error) {
 	return int(tx.RowsAffected), nil
 }
 
-func (repo *userRepository) UpdateUser(datacore user.Core, id int) (err error) {
+func (repo *userRepository) UpdateUser(datacore user.Core, id uint) (err error) {
 	userGorm := fromCore(datacore)
 	tx := repo.db.Where("id= ?", id).Updates(userGorm)
 	if tx.Error != nil {
@@ -53,7 +53,7 @@ func (repo *userRepository) UpdateUser(datacore user.Core, id int) (err error) {
 	return nil
 }
 
-func (repo *userRepository) DeleteUser(id int) (err error) {
+func (repo *userRepository) DeleteUser(id uint) (err error) {
 	idUser := User{}
 
 	tx := repo.db.Delete(&idUser, id)
@@ -66,7 +66,7 @@ func (repo *userRepository) DeleteUser(id int) (err error) {
 	return nil
 }
 
-func (repo *userRepository) UpdateById(datacore user.Core, id int) (err error) {
+func (repo *userRepository) UpdateById(datacore user.Core, id uint) (err error) {
 	userGorm := fromCore(datacore)
 	tx := repo.db.Where("id= ?", id).Updates(userGorm)
 	if tx.Error != nil {
