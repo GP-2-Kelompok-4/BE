@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/user"
+	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/utils/helper"
 )
 
 type userService struct {
@@ -26,6 +27,13 @@ func (service *userService) AddUser(input user.Core) (err error) {
 	input.Gender = "Male"
 	input.Team = "Academic"
 	input.Status = "Active"
+
+	hash_pass, errHash := helper.HashPassword(input.Password)
+	if errHash != nil {
+		return errHash
+	}
+	input.Password = hash_pass
+
 	_, errCreate := service.userRepository.AddUser(input)
 	if errCreate != nil {
 		return errors.New("failed insert data, error query")

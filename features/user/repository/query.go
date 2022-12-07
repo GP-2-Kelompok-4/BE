@@ -4,7 +4,6 @@ import (
 	"errors"
 
 	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/user"
-	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/utils/helper"
 	"gorm.io/gorm"
 )
 
@@ -36,11 +35,6 @@ func (repo *userRepository) AddUser(input user.Core) (row int, err error) {
 	if tx.Error != nil {
 		return -1, tx.Error
 	}
-	hash_pass, errHash := helper.HashPassword(input.Password)
-	if errHash != nil {
-		return -1, errHash
-	}
-	input.Password = hash_pass
 
 	if tx.RowsAffected == 0 {
 		return 0, errors.New("insert failed")
