@@ -20,7 +20,7 @@ func New(db *gorm.DB) auth.RepositoryInterface {
 func (repo *authRepo) Login(email, password string) (loginData auth.Core, err error) {
 	userModel := User{}
 	loginData = auth.Core{}
-	tx := repo.db.Where("email = ? AND password = ?", email, password).First(&userModel)
+	tx := repo.db.Where("email = ? ", email).First(&userModel)
 	if tx.Error != nil {
 		return loginData, tx.Error
 	}
