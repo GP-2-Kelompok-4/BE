@@ -47,6 +47,10 @@ func (service *classService) UpdateClass(input class.ClassCore, id uint) (data c
 }
 
 // DeleteClass implements class.ServiceInterface
-func (*classService) DeleteClass(id uint) (err error) {
-	panic("unimplemented")
+func (service *classService) DeleteClass(id uint) (err error) {
+	err = service.classRepository.DeleteClass(id)
+	if err != nil {
+		return errors.New("failed to delete data, error query")
+	}
+	return nil
 }
