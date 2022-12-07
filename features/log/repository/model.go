@@ -3,6 +3,7 @@ package repository
 import (
 	"time"
 
+	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/log"
 	"gorm.io/gorm"
 )
 
@@ -49,4 +50,14 @@ type Mentee struct {
 	EmergencyContactStatus string
 	ClassID                uint
 	Log                    []Log
+}
+
+func fromCore(dataCore log.CoreLog) Log {
+	logGorm := Log{
+		UserID:   dataCore.ID,
+		MenteeID: dataCore.MenteeID,
+		Notes:    dataCore.Notes,
+		Status:   dataCore.Status,
+	}
+	return logGorm
 }
