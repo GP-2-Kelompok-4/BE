@@ -5,16 +5,15 @@ import (
 
 	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/auth"
 	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/middlewares"
-	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/utils/helper"
 )
 
 type authService struct {
-	authData auth.RepositoryInterface
+	authRepo auth.RepositoryInterface
 }
 
 func New(data auth.RepositoryInterface) auth.ServiceInterface {
 	return &authService{
-		authData: data,
+		authRepo: data,
 	}
 }
 
@@ -24,17 +23,17 @@ func (service *authService) Login(email, password string) (LoginData auth.Login,
 		return LoginData, errors.New("email and password must be filled")
 	}
 
-	result, err := service.authData.Login(email, password)
+	result, err := service.authRepo.Login(email, password)
 
 	if err != nil {
 		return LoginData, err
 	}
 
-	cekPass := helper.CheckPasswordHash(password, result.Password)
+	// cekPass := helper.CheckPasswordHash(password, result.Password)
 
-	if !cekPass {
-		return LoginData, errors.New("login failed")
-	}
+	// if !cekPass {
+	// 	return LoginData, errors.New("login failed")
+	// }
 
 	token, errToken := middlewares.CreateToken(int(result.ID), result.Role)
 	if errToken != nil {
