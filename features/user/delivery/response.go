@@ -3,16 +3,22 @@ package delivery
 import "github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/user"
 
 type UserResponse struct {
-	ID           uint
-	Name         string
-	Email        string
-	Phone_Number string
-	Role         string
-	Address      string
-	Home_Address string
-	Team         string
-	Status       string
-	Gender       string
+	ID           uint   `json:"id" form:"id"`
+	Name         string `json:"name" form:"name"`
+	Email        string `json:"email" form:"email"`
+	Phone_Number string `json:"phone_number" form:"phone_number"`
+	Role         string `json:"role" form:"role"`
+	Address      string `json:"address" form:"address"`
+	Home_Address string `json:"home_address" form:"home_address"`
+	Team         string `json:"team" form:"team"`
+	Status       string `json:"status" form:"status"`
+	Gender       string `json:"gender" form:"gender"`
+}
+
+type AddResponse struct {
+	ID    uint   `json:"id" form:"id"`
+	Name  string `json:"name" form:"name"`
+	Email string `json:"email" form:"email"`
 }
 
 func FromCore(dataCore user.Core) UserResponse {
@@ -39,8 +45,8 @@ func FromCoreList(dataCore []user.Core) []UserResponse {
 
 }
 
-func AddFromCore(dataCore user.Core) UserResponse {
-	return UserResponse{
+func AddFromCore(dataCore user.Core) AddResponse {
+	return AddResponse{
 		ID:    dataCore.ID,
 		Name:  dataCore.Name,
 		Email: dataCore.Email,

@@ -27,10 +27,6 @@ func New(service user.ServiceInterface, e *echo.Echo) {
 
 }
 
-func (delivery *UserDelivery) Login(c echo.Context) error {
-
-	return nil
-}
 func (delivery *UserDelivery) GetAllUser(c echo.Context) error {
 	results, err := delivery.userService.GetAllUser()
 	if err != nil {
@@ -43,7 +39,7 @@ func (delivery *UserDelivery) GetAllUser(c echo.Context) error {
 func (delivery *UserDelivery) AddUser(c echo.Context) error {
 	roleToken := middlewares.ExtractTokenUserRole(c)
 	if roleToken != "Admin" {
-		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("Data can be seen by admin"))
+		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("Data can be seen by Admin"))
 	}
 	userInput := UserRequest{}
 	errBind := c.Bind(&userInput)
@@ -74,7 +70,8 @@ func (delivery *UserDelivery) UpdateUser(c echo.Context) error {
 	if errUpt != nil {
 		return c.JSON(http.StatusBadRequest, helper.FailedResponse("Error Db update "+errUpt.Error()))
 	}
-	return c.JSON(http.StatusOK, helper.SuccessResponse("success update data"))
+	data := FromCore(dataCore)
+	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("success update data", data))
 }
 
 func (delivery *UserDelivery) DeleteUser(c echo.Context) error {
@@ -118,5 +115,6 @@ func (delivery *UserDelivery) UpdateById(c echo.Context) error {
 	if errUpt != nil {
 		return c.JSON(http.StatusBadRequest, helper.FailedResponse("Error Db update "+errUpt.Error()))
 	}
-	return c.JSON(http.StatusOK, helper.SuccessResponse("success update data"))
+	data := FromCore(dataCore)
+	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("success update data", data))
 }
