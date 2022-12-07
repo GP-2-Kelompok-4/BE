@@ -26,16 +26,18 @@ type MenteeRequest struct {
 	EmergencyContactStatus string `json:"emergency_contact_status" form:"emergency_contact_status"`
 }
 
-var layout2 = "2006-01-02"
+var layout2 = "2012"
 
 func toCore(data MenteeRequest) mentee.MenteeCore {
 	graduate, _ := time.Parse(layout2, data.Graduate)
 	return mentee.MenteeCore{
+		// ID:                     0,
 		Name:                   data.Name,
 		Nickname:               data.Nickname,
 		Email:                  data.Email,
 		Gender:                 data.Gender,
 		PhoneNumber:            data.PhoneNumber,
+		ClassId:                data.ClassID,
 		Address:                data.Address,
 		HomeAddress:            data.HomeAddress,
 		TelegramAccount:        data.TelegramAccount,
@@ -47,5 +49,7 @@ func toCore(data MenteeRequest) mentee.MenteeCore {
 		Institution:            data.Institution,
 		EmergencyContact:       data.EmergencyContact,
 		EmergencyContactStatus: data.EmergencyContactStatus,
+		// LogStruct:              mentee.Log{},
+		// Class:                  mentee.Class{},
 	}
 }
