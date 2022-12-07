@@ -68,6 +68,15 @@ func (repo *userRepository) UpdateClass(input class.ClassCore, id uint) (data cl
 }
 
 // DeleteClass implements class.RepositoryInterface
-func (*userRepository) DeleteClass(id uint) (err error) {
-	panic("unimplemented")
+func (repo *userRepository) DeleteClass(id uint) (err error) {
+	var class Class
+
+	tx := repo.db.Delete(&class, id)
+	if tx.Error != nil {
+		return tx.Error
+	}
+	if tx.RowsAffected == 0 {
+		return errors.New("delete failed")
+	}
+	return nil
 }

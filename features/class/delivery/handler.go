@@ -25,6 +25,7 @@ func New(service class.ServiceInterface, e *echo.Echo) {
 	e.GET("/classes", handler.GetAll, middlewares.JWTMiddleware())
 	e.GET("/classes/:id", handler.GetClassById, middlewares.JWTMiddleware())
 	e.PUT("classes/:id", handler.UpdateClass, middlewares.JWTMiddleware())
+	e.DELETE("classes/:id", handler.DeleteClass, middlewares.JWTMiddleware())
 
 }
 
@@ -84,4 +85,16 @@ func (delivery *classDelivery) UpdateClass(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("internal server error"+err.Error()))
 	}
 	return c.JSON(http.StatusCreated, helper.SuccessWithDataResponse("success update class", dataUpdateCore))
+}
+
+func (delivery *classDelivery) DeleteClass(c echo.Context) error {
+	idParam, _ := strconv.Atoi(c.Param("id"))
+
+	err := delivery.classService.DeleteClass(uint(idParam))
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+	return c.JSON(http.StatusOK, map[string]any{
+		"message": "success delete class",
+	})
 }
