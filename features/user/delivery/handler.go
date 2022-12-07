@@ -42,7 +42,7 @@ func (delivery *UserDelivery) GetAllUser(c echo.Context) error {
 
 func (delivery *UserDelivery) AddUser(c echo.Context) error {
 	roleToken := middlewares.ExtractTokenUserRole(c)
-	if roleToken != "Admin" {
+	if roleToken != "admin" {
 		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("Data can be seen by admin"))
 	}
 	userInput := UserRequest{}
@@ -83,7 +83,7 @@ func (delivery *UserDelivery) DeleteUser(c echo.Context) error {
 	}
 
 	roleToken := middlewares.ExtractTokenUserRole(c)
-	if roleToken != "Admin" {
+	if roleToken != "admin" {
 		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("Data can be seen by admin"))
 	}
 
