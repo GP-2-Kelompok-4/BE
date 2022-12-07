@@ -34,11 +34,16 @@ func (repo *userRepository) InsertClass(data class.ClassCore) (row int, err erro
 func (repo *userRepository) GetAllClassess() (data []class.ClassCore, err error) {
 	// db.Model(&User{}).Select("users.name, emails.email").Joins("left join emails on emails.user_id = users.id").Scan(&result{})
 	var classes []Class
-	tx := repo.db.Model(&Class{}).Select("class.ID, class.Name, class.StartDate, class.GraduateDate, class.User.Name as PIC").Joins("left join user on class.userid = user.id").Find(&classes)
+	// tx := repo.db.Model(&Class{}).Select("class.ID, class.Name, class.StartDate, class.GraduateDate, class.User.Name as PIC").Joins("left join user on class.userid = user.id").Find(&classes)
+	tx := repo.db.Preload("User").Find(&classes)
 	if tx.Error != nil {
 		return nil, tx.Error
 	}
 	var dataCore = toCoreList(classes)
+
+	// test dataCore
+	// fmt.Println(dataCore)
+
 	return dataCore, nil
 }
 
