@@ -39,7 +39,7 @@ func (delivery *UserDelivery) GetAllUser(c echo.Context) error {
 func (delivery *UserDelivery) AddUser(c echo.Context) error {
 	roleToken := middlewares.ExtractTokenUserRole(c)
 	if roleToken != "Admin" {
-		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("Data can be seen by Admin"))
+		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("Data only can be added by Admin"))
 	}
 	userInput := UserRequest{}
 	errBind := c.Bind(&userInput)
@@ -82,7 +82,7 @@ func (delivery *UserDelivery) DeleteUser(c echo.Context) error {
 
 	roleToken := middlewares.ExtractTokenUserRole(c)
 	if roleToken != "Admin" {
-		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("Data can be seen by admin"))
+		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("Data only can be deleted by admin"))
 	}
 
 	errDel := delivery.userService.DeleteUser(uint(id))
