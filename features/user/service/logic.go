@@ -34,6 +34,7 @@ func (service *userService) AddUser(input user.Core) (err error) {
 }
 
 func (service *userService) UpdateUser(dataCore user.Core, id uint) (err error) {
+	dataCore.Role = "User"
 	errUpdate := service.userRepository.UpdateUser(dataCore, id)
 	if errUpdate != nil {
 		return errors.New("failed update data, error query")
