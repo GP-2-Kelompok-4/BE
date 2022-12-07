@@ -45,3 +45,8 @@ func (service *classService) UpdateClass(input class.ClassCore, id uint) (data c
 	}
 	return data, nil
 }
+
+// DeleteClass implements class.ServiceInterface
+func (*classService) DeleteClass(id uint) (err error) {
+	panic("unimplemented")
+}

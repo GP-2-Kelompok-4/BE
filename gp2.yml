@@ -27,8 +27,8 @@ paths:
       tags: 
       - Authentication
       summary: Login to system
-      security:
-        - JWTAuth: []
+#       security:
+#         - JWTAuth: []
       requestBody: 
         required: true
         content: 
