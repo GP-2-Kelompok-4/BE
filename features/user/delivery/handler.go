@@ -36,7 +36,7 @@ func (delivery *UserDelivery) GetAllUser(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, helper.FailedResponse("error read data"))
 	}
-	dataRespon := DataUserRespon(results)
+	dataRespon := FromCoreList(results)
 	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("success read all users", dataRespon))
 }
 
