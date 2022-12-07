@@ -14,18 +14,19 @@ type Mentee struct {
 	Email                  string
 	Gender                 string
 	PhoneNumber            string
-	Address                string
-	HomeAddress            string
 	TelegramAccount        string
 	DiscordAccount         string
+	ClassId                uint
+	Address                string
+	HomeAddress            string
 	Status                 string
 	EducationType          string
 	EducationMajor         string
-	Graduate               time.Time
 	Institution            string
+	Graduate               time.Time
 	EmergencyContact       string
+	EmergencyContactName   string
 	EmergencyContactStatus string
-	ClassId                uint
 	Log                    []Log
 	LogStruct              Log
 	Class                  Class
@@ -60,61 +61,62 @@ func fromCore(dataCore mentee.MenteeCore) Mentee {
 		Email:                  dataCore.Email,
 		Gender:                 dataCore.Gender,
 		PhoneNumber:            dataCore.PhoneNumber,
-		Address:                dataCore.Address,
-		HomeAddress:            dataCore.HomeAddress,
 		TelegramAccount:        dataCore.TelegramAccount,
 		DiscordAccount:         dataCore.DiscordAccount,
+		ClassId:                dataCore.ClassId,
+		Address:                dataCore.Address,
+		HomeAddress:            dataCore.HomeAddress,
 		Status:                 dataCore.Status,
 		EducationType:          dataCore.EducationType,
 		EducationMajor:         dataCore.EducationMajor,
-		Graduate:               dataCore.Graduate,
 		Institution:            dataCore.Institution,
+		Graduate:               dataCore.Graduate,
 		EmergencyContact:       dataCore.EmergencyContact,
+		EmergencyContactName:   dataCore.EmergencyContactName,
 		EmergencyContactStatus: dataCore.EmergencyContactStatus,
-		ClassId:                dataCore.ClassId,
 	}
 	return menteeGorm
 }
 
-func (dataModel *Mentee) toCore() mentee.MenteeCore {
-	return mentee.MenteeCore{
-		ID:                     dataModel.ID,
-		Name:                   dataModel.Name,
-		Nickname:               dataModel.Nickname,
-		Email:                  dataModel.Email,
-		Gender:                 dataModel.Gender,
-		PhoneNumber:            dataModel.PhoneNumber,
-		Address:                dataModel.Address,
-		HomeAddress:            dataModel.HomeAddress,
-		TelegramAccount:        dataModel.TelegramAccount,
-		DiscordAccount:         dataModel.DiscordAccount,
-		Status:                 dataModel.Status,
-		EducationType:          dataModel.EducationType,
-		EducationMajor:         dataModel.EducationMajor,
-		Graduate:               dataModel.Graduate,
-		Institution:            dataModel.Institution,
-		EmergencyContact:       dataModel.EmergencyContact,
-		EmergencyContactStatus: dataModel.EmergencyContactStatus,
-		ClassId:                dataModel.ClassId,
-		Class: mentee.Class{
-			ID:   dataModel.Class.ID,
-			Name: dataModel.Class.Name,
-		},
-		LogStruct: mentee.Log{
-			ID:        dataModel.LogStruct.ID,
-			UserId:    dataModel.LogStruct.UserId,
-			Status:    dataModel.LogStruct.Notes,
-			Notes:     dataModel.LogStruct.Notes,
-			CreatedAt: dataModel.LogStruct.CreatedAt,
-			User:      mentee.User{},
-		},
-	}
-}
+// func (dataModel *Mentee) toCore() mentee.MenteeCore {
+// 	return mentee.MenteeCore{
+// 		ID:                     dataModel.ID,
+// 		Name:                   dataModel.Name,
+// 		Nickname:               dataModel.Nickname,
+// 		Email:                  dataModel.Email,
+// 		Gender:                 dataModel.Gender,
+// 		PhoneNumber:            dataModel.PhoneNumber,
+// 		Address:                dataModel.Address,
+// 		HomeAddress:            dataModel.HomeAddress,
+// 		TelegramAccount:        dataModel.TelegramAccount,
+// 		DiscordAccount:         dataModel.DiscordAccount,
+// 		Status:                 dataModel.Status,
+// 		EducationType:          dataModel.EducationType,
+// 		EducationMajor:         dataModel.EducationMajor,
+// 		Graduate:               dataModel.Graduate,
+// 		Institution:            dataModel.Institution,
+// 		EmergencyContact:       dataModel.EmergencyContact,
+// 		EmergencyContactStatus: dataModel.EmergencyContactStatus,
+// 		ClassId:                dataModel.ClassId,
+// 		Class: mentee.Class{
+// 			ID:   dataModel.Class.ID,
+// 			Name: dataModel.Class.Name,
+// 		},
+// 		LogStruct: mentee.Log{
+// 			ID:        dataModel.LogStruct.ID,
+// 			UserId:    dataModel.LogStruct.UserId,
+// 			Status:    dataModel.LogStruct.Notes,
+// 			Notes:     dataModel.LogStruct.Notes,
+// 			CreatedAt: dataModel.LogStruct.CreatedAt,
+// 			User:      mentee.User{},
+// 		},
+// 	}
+// }
 
-func toCoreList(dataModel []Mentee) []mentee.MenteeCore {
-	var dataCore []mentee.MenteeCore
-	for _, v := range dataModel {
-		dataCore = append(dataCore, v.toCore())
-	}
-	return dataCore
-}
+// func toCoreList(dataModel []Mentee) []mentee.MenteeCore {
+// 	var dataCore []mentee.MenteeCore
+// 	for _, v := range dataModel {
+// 		dataCore = append(dataCore, v.toCore())
+// 	}
+// 	return dataCore
+// }

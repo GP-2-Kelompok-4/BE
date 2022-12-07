@@ -20,8 +20,8 @@ func New(db *gorm.DB) mentee.RepositoryInterface {
 }
 
 func (repo *menteeRepository) Create(input mentee.MenteeCore) (row int, err error) {
-	userGorm := fromCore(input)
-	tx := repo.db.Create(&userGorm)
+	menteeGorm := fromCore(input)
+	tx := repo.db.Create(&menteeGorm)
 	if tx.Error != nil {
 		return -1, tx.Error
 	}

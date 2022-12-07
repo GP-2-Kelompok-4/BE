@@ -23,6 +23,7 @@ type MenteeRequest struct {
 	Institution            string `json:"institution" form:"institution"`
 	Graduate               string `json:"graduate" form:"graduate"`
 	EmergencyContact       string `json:"emergency_contact" form:"emergency_contact"`
+	EmergencyContactName   string `json:"emergency_contact_name" form:"emergency_contact_name"`
 	EmergencyContactStatus string `json:"emergency_contact_status" form:"emergency_contact_status"`
 }
 
@@ -37,17 +38,18 @@ func toCore(data MenteeRequest) mentee.MenteeCore {
 		Email:                  data.Email,
 		Gender:                 data.Gender,
 		PhoneNumber:            data.PhoneNumber,
+		TelegramAccount:        data.TelegramAccount,
+		DiscordAccount:         data.DiscordAccount,
 		ClassId:                data.ClassID,
 		Address:                data.Address,
 		HomeAddress:            data.HomeAddress,
-		TelegramAccount:        data.TelegramAccount,
-		DiscordAccount:         data.DiscordAccount,
 		Status:                 data.Status,
 		EducationType:          data.EducationType,
 		EducationMajor:         data.EducationMajor,
-		Graduate:               graduate,
 		Institution:            data.Institution,
+		Graduate:               graduate,
 		EmergencyContact:       data.EmergencyContact,
+		EmergencyContactName:   data.EmergencyContactName,
 		EmergencyContactStatus: data.EmergencyContactStatus,
 		// LogStruct:              mentee.Log{},
 		// Class:                  mentee.Class{},
