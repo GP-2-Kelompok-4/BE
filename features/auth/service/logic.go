@@ -18,13 +18,10 @@ func New(data auth.RepositoryInterface) auth.ServiceInterface {
 }
 
 func (service *authService) Login(email, password string) (LoginData auth.Login, err error) {
-
 	if email == "" || password == "" {
-		return LoginData, errors.New("email and password must be filled")
+		return LoginData, errors.New("field must be filled")
 	}
-
 	result, err := service.authRepo.Login(email, password)
-
 	if err != nil {
 		return LoginData, err
 	}
