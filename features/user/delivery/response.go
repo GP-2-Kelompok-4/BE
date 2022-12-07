@@ -40,3 +40,11 @@ func FromCoreList(dataCore []user.Core) []UserResponse {
 	return dataResponse
 
 }
+
+func AddFromCore(dataCore user.Core) UserResponse {
+	return UserResponse{
+		ID:    dataCore.ID,
+		Name:  dataCore.Name,
+		Email: dataCore.Email,
+	}
+}

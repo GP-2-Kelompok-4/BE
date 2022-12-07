@@ -20,13 +20,13 @@ func New(service auth.ServiceInterface, e *echo.Echo) {
 }
 
 func (handler *AuthHandler) Login(c echo.Context) error {
-	reqBody := LoginRequest{}
-	errBind := c.Bind(&reqBody)
+	reqLogin := LoginRequest{}
+	errBind := c.Bind(&reqLogin)
 	if errBind != nil {
 		return c.JSON(http.StatusBadRequest, helper.FailedResponse("failed to bind data"))
 	}
 
-	Data, err := handler.authService.Login(reqBody.Email, reqBody.Password)
+	Data, err := handler.authService.Login(reqLogin.Email, reqLogin.Password)
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("failed to get token data"+err.Error()))
