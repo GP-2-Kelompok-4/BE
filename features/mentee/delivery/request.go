@@ -40,7 +40,7 @@ func toCore(data MenteeRequest) mentee.MenteeCore {
 		PhoneNumber:            data.PhoneNumber,
 		TelegramAccount:        data.TelegramAccount,
 		DiscordAccount:         data.DiscordAccount,
-		ClassId:                data.ClassID,
+		ClassId:                uint(data.ClassID),
 		Address:                data.Address,
 		HomeAddress:            data.HomeAddress,
 		Status:                 data.Status,
