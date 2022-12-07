@@ -41,6 +41,10 @@ func (delivery *UserDelivery) GetAllUser(c echo.Context) error {
 }
 
 func (delivery *UserDelivery) AddUser(c echo.Context) error {
+	roleToken := middlewares.ExtractTokenUserRole(c)
+	if roleToken != "admin" {
+		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("Data can be seen by admin"))
+	}
 	userInput := UserRequest{}
 	errBind := c.Bind(&userInput)
 	if errBind != nil {
@@ -56,7 +60,6 @@ func (delivery *UserDelivery) AddUser(c echo.Context) error {
 }
 
 func (delivery *UserDelivery) UpdateUser(c echo.Context) error {
-	id := middlewares.ExtractTokenUserId(c)
 
 	userInput := UserRequest{}
 	errBind := c.Bind(&userInput)
@@ -97,10 +100,10 @@ func (delivery *UserDelivery) UpdateById(c echo.Context) error {
 	if errConv != nil {
 		return c.JSON(http.StatusBadRequest, helper.BadRequest(errConv.Error()))
 	}
-	// roleToken := middlewares.ExtractTokenUserRole(c)
-	// if roleToken != "admin" {
-	// 	return c.JSON(http.StatusUnauthorized, helper.FailedResponse("update data only by admin"))
-	// }
+	roleToken := middlewares.ExtractTokenUserRole(c)
+	if roleToken != "admin" {
+		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("update data only by admin"))
+	}
 
 	userInput := UserRequest{}
 	errBind := c.Bind(&userInput)
