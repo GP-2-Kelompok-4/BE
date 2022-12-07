@@ -20,7 +20,7 @@ func New(service user.ServiceInterface, e *echo.Echo) {
 	}
 
 	e.GET("/users", handler.GetAllUser, middlewares.JWTMiddleware())
-	e.POST("/users", handler.AddUser)
+	e.POST("/users", handler.AddUser, middlewares.JWTMiddleware())
 	e.PUT("/users", handler.UpdateUser, middlewares.JWTMiddleware())
 	e.DELETE("/users/:id", handler.DeleteUser, middlewares.JWTMiddleware())
 	e.PUT("/users/:id", handler.UpdateById, middlewares.JWTMiddleware())
@@ -42,7 +42,7 @@ func (delivery *UserDelivery) GetAllUser(c echo.Context) error {
 
 func (delivery *UserDelivery) AddUser(c echo.Context) error {
 	roleToken := middlewares.ExtractTokenUserRole(c)
-	if roleToken != "admin" {
+	if roleToken != "Admin" {
 		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("Data can be seen by admin"))
 	}
 	userInput := UserRequest{}
@@ -55,8 +55,9 @@ func (delivery *UserDelivery) AddUser(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("failed insert data"+err.Error()))
 	}
+	res := AddFromCore(dataCore)
 
-	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("success create new users", userInput))
+	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("success create new users", res))
 }
 
 func (delivery *UserDelivery) UpdateUser(c echo.Context) error {
@@ -83,7 +84,7 @@ func (delivery *UserDelivery) DeleteUser(c echo.Context) error {
 	}
 
 	roleToken := middlewares.ExtractTokenUserRole(c)
-	if roleToken != "admin" {
+	if roleToken != "Admin" {
 		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("Data can be seen by admin"))
 	}
 
@@ -102,7 +103,7 @@ func (delivery *UserDelivery) UpdateById(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, helper.BadRequest(errConv.Error()))
 	}
 	roleToken := middlewares.ExtractTokenUserRole(c)
-	if roleToken != "admin" {
+	if roleToken != "Admin" {
 		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("update data only by admin"))
 	}
 
