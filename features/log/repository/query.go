@@ -35,7 +35,7 @@ func (repo *logRepository) CreateLog(data log.CoreLog) (res log.CoreLog, err err
 		return dataUpdate, tx.Error
 	}
 
-	tx2 := repo.db.Joins("join mentee on log.mentee_id = mentee.id").Joins("join user on log.user_id = user.id").Where("id = ?", logModel.ID).Find(&logModel)
+	tx2 := repo.db.Joins("join mentee on log.mentee_id = mentees.id").Joins("join user on log.user_id = users.id").Where("id = ?", logModel.ID).Find(&logModel)
 	if tx2.Error != nil {
 		return dataUpdate, tx.Error
 	}

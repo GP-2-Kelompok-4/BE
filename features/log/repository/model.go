@@ -54,7 +54,7 @@ type Mentee struct {
 
 func fromCore(dataCore log.CoreLog) Log {
 	logGorm := Log{
-		UserID:   dataCore.ID,
+		UserID:   dataCore.UserID,
 		MenteeID: dataCore.MenteeID,
 		Notes:    dataCore.Notes,
 		Status:   dataCore.Status,
@@ -64,7 +64,7 @@ func fromCore(dataCore log.CoreLog) Log {
 
 func toCore(dataCore Log) log.CoreLog {
 	logGorm := log.CoreLog{
-		UserID:   dataCore.ID,
+		UserID:   dataCore.UserID,
 		MenteeID: dataCore.MenteeID,
 		Notes:    dataCore.Notes,
 		Status:   dataCore.Status,
