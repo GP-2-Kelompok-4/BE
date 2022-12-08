@@ -40,7 +40,7 @@ func (repo *menteeRepository) GetAll(queryClass, queryEducationType, queryStatus
 	var mentees []Mentee
 	// tx := repo.db.Preload("Class").Find(&mentees)
 	// tx := repo.db.Preload("Class").Where("classes.name = ? AND education_type = ? AND status = ?", queryClass, queryEducationType, queryStatus).Find(&mentees)
-	tx := repo.db.Where(&Mentee{EducationType: queryEducationType, Status: queryStatus, Class: Class{Name: queryClass}}).Find(&mentees)
+	tx := repo.db.Preload("Class").Where(&Mentee{EducationType: queryEducationType, Status: queryStatus, Class: Class{Name: queryClass}}).Find(&mentees)
 	if tx.Error != nil {
 		return nil, tx.Error
 	}
