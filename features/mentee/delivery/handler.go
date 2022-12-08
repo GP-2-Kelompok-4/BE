@@ -49,7 +49,6 @@ func (delivery *MenteeDelivery) AddMentee(c echo.Context) error {
 	return c.JSON(http.StatusCreated, helper.SuccessWithDataResponse("success add new mentee", dataResponse))
 }
 
-
 func (delivery *MenteeDelivery) GetAll(c echo.Context) error {
 	queryClass := c.QueryParam("class")
 	queryEducationType := c.QueryParam("education_type")
@@ -62,16 +61,12 @@ func (delivery *MenteeDelivery) GetAll(c echo.Context) error {
 	dataResponse := fromCoreList(results)
 
 	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("success read all data users", dataResponse))
+}
 
 func (delivery *MenteeDelivery) DeleteMentee(c echo.Context) error {
 	id, errConv := strconv.Atoi(c.Param("id"))
 	if errConv != nil {
 		return c.JSON(http.StatusBadRequest, helper.BadRequest(errConv.Error()))
-	}
-
-	roleToken := middlewares.ExtractTokenUserRole(c)
-	if roleToken != "Admin" {
-		return c.JSON(http.StatusUnauthorized, helper.FailedResponse("Data only can be deleted by admin"))
 	}
 
 	errDel := delivery.menteeService.DeleteMentee(uint(id))
