@@ -28,13 +28,15 @@ func (delivery *LogDelivery) CreateLog(c echo.Context) error {
 	}
 
 	logInput := LogRequest{}
-	logInput.UserID = uint(userId)
-	logInput.UserName = Poster
 	errBind := c.Bind(&logInput)
 	if errBind != nil {
 		return c.JSON(http.StatusNotFound, helper.FailedResponse("requested resource was not found "+errBind.Error()))
 	}
+	logInput.UserID = uint(userId)
+	logInput.UserName = Poster
 	logCore := requestToCore(logInput)
+	logCore.UserID = uint(userId)
+	logCore.UserName = Poster
 	err := delivery.logService.CreateLog(logCore)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("internal server error "+err.Error()))
