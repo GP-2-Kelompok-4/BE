@@ -25,6 +25,8 @@ func New(service mentee.ServiceInterface, e *echo.Echo) {
 	}
 
 	e.POST("/mentees", handler.AddMentee, middlewares.JWTMiddleware())
+	e.DELETE("/mentees/:id", handler.DeleteMentee, middlewares.JWTMiddleware())
+	e.PUT("/mentees/:id", handler.UpdateMentee, middlewares.JWTMiddleware())
 }
 
 func (delivery *MenteeDelivery) AddMentee(c echo.Context) error {
@@ -43,7 +45,7 @@ func (delivery *MenteeDelivery) AddMentee(c echo.Context) error {
 	return c.JSON(http.StatusCreated, helper.SuccessWithDataResponse("success add new mentee", dataResponse))
 }
 
-func (delivery *MenteeDelivery) DeleteUser(c echo.Context) error {
+func (delivery *MenteeDelivery) DeleteMentee(c echo.Context) error {
 	id, errConv := strconv.Atoi(c.Param("id"))
 	if errConv != nil {
 		return c.JSON(http.StatusBadRequest, helper.BadRequest(errConv.Error()))
