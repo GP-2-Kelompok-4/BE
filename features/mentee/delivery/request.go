@@ -27,7 +27,7 @@ type MenteeRequest struct {
 	EmergencyContactStatus string `json:"emergency_contact_status" form:"emergency_contact_status"`
 }
 
-var layout2 = "2012-08-10"
+var layout2 = "2006-01-02"
 
 func toCore(data MenteeRequest) mentee.MenteeCore {
 	graduate, _ := time.Parse(layout2, data.Graduate)
