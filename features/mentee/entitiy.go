@@ -53,8 +53,7 @@ type ServiceInterface interface {
 	GetAll(queryClass, queryEducationType, queryStatus string) (data []MenteeCore, err error)
 
 	DeleteMentee(id uint) (err error)
-	UpdateMentee(input MenteeCore, id uint) (data MenteeCore, err error)
-
+	UpdateMentee(input MenteeCore, id uint) (err error)
 }
 
 type RepositoryInterface interface {
@@ -64,6 +63,5 @@ type RepositoryInterface interface {
 	// GetAllFiltering(queryClass, queryEducationType, queryStatus string) (data []MenteeCore, err error)
 
 	DeleteMentee(id uint) (err error)
-	UpdateMentee(input MenteeCore, id uint) (data MenteeCore, err error)
-
+	UpdateMentee(input MenteeCore, id uint) (err error)
 }
