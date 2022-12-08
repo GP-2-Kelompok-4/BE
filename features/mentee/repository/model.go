@@ -111,6 +111,7 @@ func (dataModel *Mentee) toCore() mentee.MenteeCore {
 		Graduate:               dataModel.Graduate,
 		Institution:            dataModel.Institution,
 		EmergencyContact:       dataModel.EmergencyContact,
+		EmergencyContactName:   dataModel.EmergencyContactName,
 		EmergencyContactStatus: dataModel.EmergencyContactStatus,
 		ClassId:                dataModel.ClassId,
 		Class: mentee.Class{
