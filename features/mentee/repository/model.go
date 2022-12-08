@@ -78,45 +78,58 @@ func fromCore(dataCore mentee.MenteeCore) Mentee {
 	return menteeGorm
 }
 
-// func (dataModel *Mentee) toCore() mentee.MenteeCore {
-// 	return mentee.MenteeCore{
-// 		ID:                     dataModel.ID,
-// 		Name:                   dataModel.Name,
-// 		Nickname:               dataModel.Nickname,
-// 		Email:                  dataModel.Email,
-// 		Gender:                 dataModel.Gender,
-// 		PhoneNumber:            dataModel.PhoneNumber,
-// 		Address:                dataModel.Address,
-// 		HomeAddress:            dataModel.HomeAddress,
-// 		TelegramAccount:        dataModel.TelegramAccount,
-// 		DiscordAccount:         dataModel.DiscordAccount,
-// 		Status:                 dataModel.Status,
-// 		EducationType:          dataModel.EducationType,
-// 		EducationMajor:         dataModel.EducationMajor,
-// 		Graduate:               dataModel.Graduate,
-// 		Institution:            dataModel.Institution,
-// 		EmergencyContact:       dataModel.EmergencyContact,
-// 		EmergencyContactStatus: dataModel.EmergencyContactStatus,
-// 		ClassId:                dataModel.ClassId,
-// 		Class: mentee.Class{
-// 			ID:   dataModel.Class.ID,
-// 			Name: dataModel.Class.Name,
-// 		},
-// 		LogStruct: mentee.Log{
-// 			ID:        dataModel.LogStruct.ID,
-// 			UserId:    dataModel.LogStruct.UserId,
-// 			Status:    dataModel.LogStruct.Notes,
-// 			Notes:     dataModel.LogStruct.Notes,
-// 			CreatedAt: dataModel.LogStruct.CreatedAt,
-// 			User:      mentee.User{},
-// 		},
-// 	}
-// }
+func (dataModel *Log) toCoreLog() mentee.Log {
+	return mentee.Log{
+		ID:     dataModel.ID,
+		UserId: dataModel.UserId,
+		Status: dataModel.Status,
+		Notes:  dataModel.Notes,
+		User: mentee.User{
+			ID:   dataModel.User.ID,
+			Name: dataModel.User.Name,
+		},
+	}
+}
 
-// func toCoreList(dataModel []Mentee) []mentee.MenteeCore {
-// 	var dataCore []mentee.MenteeCore
-// 	for _, v := range dataModel {
-// 		dataCore = append(dataCore, v.toCore())
-// 	}
-// 	return dataCore
-// }
+func (dataModel *Mentee) toCore() mentee.MenteeCore {
+	return mentee.MenteeCore{
+		ID:                     dataModel.ID,
+		Name:                   dataModel.Name,
+		Nickname:               dataModel.Nickname,
+		Email:                  dataModel.Email,
+		Gender:                 dataModel.Gender,
+		PhoneNumber:            dataModel.PhoneNumber,
+		Address:                dataModel.Address,
+		HomeAddress:            dataModel.HomeAddress,
+		TelegramAccount:        dataModel.TelegramAccount,
+		DiscordAccount:         dataModel.DiscordAccount,
+		Status:                 dataModel.Status,
+		EducationType:          dataModel.EducationType,
+		EducationMajor:         dataModel.EducationMajor,
+		Graduate:               dataModel.Graduate,
+		Institution:            dataModel.Institution,
+		EmergencyContact:       dataModel.EmergencyContact,
+		EmergencyContactStatus: dataModel.EmergencyContactStatus,
+		ClassId:                dataModel.ClassId,
+		Class: mentee.Class{
+			ID:   dataModel.Class.ID,
+			Name: dataModel.Class.Name,
+		},
+		LogStruct: mentee.Log{
+			ID:        dataModel.LogStruct.ID,
+			UserId:    dataModel.LogStruct.UserId,
+			Status:    dataModel.LogStruct.Notes,
+			Notes:     dataModel.LogStruct.Notes,
+			CreatedAt: dataModel.LogStruct.CreatedAt,
+			User:      dataModel.LogStruct.toCoreLog().User,
+		},
+	}
+}
+
+func toCoreList(dataModel []Mentee) []mentee.MenteeCore {
+	var dataCore []mentee.MenteeCore
+	for _, v := range dataModel {
+		dataCore = append(dataCore, v.toCore())
+	}
+	return dataCore
+}
