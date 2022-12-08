@@ -22,7 +22,7 @@ func New(service log.ServiceInterface, e *echo.Echo) {
 
 func (delivery *LogDelivery) CreateLog(c echo.Context) error {
 	userId := middlewares.ExtractTokenUserId(c)
-	Poster := middlewares.UserLogPoster(c)
+	Poster := middlewares.ExtractTokenUserRole(c)
 	helper.LogDebug("\n extract_username= ", Poster)
 	if userId == 0 {
 		return c.JSON(http.StatusNotFound, helper.FailedResponse("requested resource was not found"))
