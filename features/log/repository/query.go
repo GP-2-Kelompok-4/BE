@@ -18,28 +18,25 @@ func New(db *gorm.DB) log.RepositoryInterface {
 }
 
 // CreateLog implements log.RepositoryInterface
-func (repo *logRepository) CreateLog(data log.CoreLog) (res log.CoreLog, err error) {
-	logModel := Log{}
-	dataUpdate := log.CoreLog{}
+func (repo *logRepository) CreateLog(data log.CoreLog) (err error) {
+	// logModel := Log{}
 	classGorm := fromCore(data)
 	tx := repo.db.Create(&classGorm)
 	if tx.Error != nil {
-		return dataUpdate, tx.Error
+		return tx.Error
 	}
 	if tx.RowsAffected == 0 {
-		return dataUpdate, errors.New("insert failed")
+		return errors.New("insert failed")
 	}
 
-	tx1 := repo.db.Where("id = ? ", data.ID).First(&logModel)
-	if tx1.Error != nil {
-		return dataUpdate, tx.Error
-	}
+	// tx1 := repo.db.Where("id= ? ", classGorm.ID).First(&logModel)
+	// if tx1.Error != nil {
+	// 	return tx.Error
+	// }
 
-	tx2 := repo.db.Joins("join mentee on log.mentee_id = mentees.id").Joins("join user on log.user_id = users.id").Where("id = ?", logModel.ID).Find(&logModel)
-	if tx2.Error != nil {
-		return dataUpdate, tx.Error
-	}
-
-	dataUpdate = toCore(logModel)
-	return dataUpdate, nil
+	// tx2 := repo.db.Preload("User").Preload("Mentee").Find(&logModel, logModel.ID)
+	// if tx2.Error != nil {
+	// 	return tx.Error
+	// }
+	return nil
 }
