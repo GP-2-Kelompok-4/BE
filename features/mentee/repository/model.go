@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/mentee"
@@ -105,6 +106,7 @@ func (dataModel *Mentee) toCore() mentee.MenteeCore {
 				Name: val.User.Name,
 			},
 		})
+		fmt.Println(arrLogs)
 	}
 	return mentee.MenteeCore{
 		ID:                     dataModel.ID,
