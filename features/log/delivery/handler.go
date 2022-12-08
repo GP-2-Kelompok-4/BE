@@ -22,12 +22,14 @@ func New(service log.ServiceInterface, e *echo.Echo) {
 
 func (delivery *LogDelivery) CreateLog(c echo.Context) error {
 	userId := middlewares.ExtractTokenUserId(c)
+	Poster := middlewares.UserLogPoster(c)
 	if userId == 0 {
 		return c.JSON(http.StatusNotFound, helper.FailedResponse("requested resource was not found"))
 	}
 
 	logInput := LogRequest{}
 	logInput.UserID = uint(userId)
+	logInput.UserName = Poster
 	errBind := c.Bind(&logInput)
 	if errBind != nil {
 		return c.JSON(http.StatusNotFound, helper.FailedResponse("requested resource was not found "+errBind.Error()))

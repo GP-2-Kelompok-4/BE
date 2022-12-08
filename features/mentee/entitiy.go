@@ -35,6 +35,7 @@ type User struct {
 
 type Log struct {
 	ID        uint
+	UserName  string
 	UserId    uint
 	Status    string
 	Notes     string
