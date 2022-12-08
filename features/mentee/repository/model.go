@@ -28,8 +28,8 @@ type Mentee struct {
 	EmergencyContactName   string
 	EmergencyContactStatus string
 	Log                    []Log
-	LogStruct              Log
-	Class                  Class
+	// LogStruct              Log
+	Class Class
 }
 
 type Class struct {
@@ -40,10 +40,12 @@ type Class struct {
 
 type Log struct {
 	gorm.Model
-	UserId uint
-	Status string
-	Notes  string
-	User   User
+	UserId   uint
+	MenteeId uint
+	Status   string
+	Notes    string
+	User     User
+	Mentee   Mentee
 }
 
 type User struct {
@@ -115,21 +117,21 @@ func (dataModel *Mentee) toCore() mentee.MenteeCore {
 			ID:   dataModel.Class.ID,
 			Name: dataModel.Class.Name,
 		},
-		LogStruct: mentee.Log{
-			ID:        dataModel.LogStruct.ID,
-			UserId:    dataModel.LogStruct.UserId,
-			Status:    dataModel.LogStruct.Notes,
-			Notes:     dataModel.LogStruct.Notes,
-			CreatedAt: dataModel.LogStruct.CreatedAt,
-			User:      dataModel.LogStruct.toCoreLog().User,
-		},
+		// LogStruct: mentee.Log{
+		// 	ID:        dataModel.LogStruct.ID,
+		// 	UserId:    dataModel.LogStruct.UserId,
+		// 	Status:    dataModel.LogStruct.Notes,
+		// 	Notes:     dataModel.LogStruct.Notes,
+		// 	CreatedAt: dataModel.LogStruct.CreatedAt,
+		// 	User:      dataModel.LogStruct.toCoreLog().User,
+		// },
 	}
 }
 
-func toCoreList(dataModel []Mentee) []mentee.MenteeCore {
-	var dataCore []mentee.MenteeCore
-	for _, v := range dataModel {
-		dataCore = append(dataCore, v.toCore())
-	}
-	return dataCore
-}
+// func toCoreList(dataModel []Mentee) []mentee.MenteeCore {
+// 	var dataCore []mentee.MenteeCore
+// 	for _, v := range dataModel {
+// 		dataCore = append(dataCore, v.toCore())
+// 	}
+// 	return dataCore
+// }
