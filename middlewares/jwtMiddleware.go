@@ -49,7 +49,7 @@ func ExtractTokenUserRole(e echo.Context) string {
 	return ""
 }
 
-func UserLogPoster(e echo.Context) string {
+func ExtractTokenUserName(e echo.Context) string {
 	user := e.Get("user").(*jwt.Token)
 	if user.Valid {
 		claims := user.Claims.(jwt.MapClaims)
