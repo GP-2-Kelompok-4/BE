@@ -23,6 +23,7 @@ func New(service log.ServiceInterface, e *echo.Echo) {
 func (delivery *LogDelivery) CreateLog(c echo.Context) error {
 	userId := middlewares.ExtractTokenUserId(c)
 	Poster := middlewares.UserLogPoster(c)
+	helper.LogDebug("\n extract_username= ", Poster)
 	if userId == 0 {
 		return c.JSON(http.StatusNotFound, helper.FailedResponse("requested resource was not found"))
 	}
@@ -34,9 +35,11 @@ func (delivery *LogDelivery) CreateLog(c echo.Context) error {
 	}
 	logInput.UserID = uint(userId)
 	logInput.UserName = Poster
+	helper.LogDebug("\n loginput_username= ", logInput.UserName)
 	logCore := requestToCore(logInput)
 	logCore.UserID = uint(userId)
 	logCore.UserName = Poster
+	helper.LogDebug("\n logcore= ", logCore.UserName)
 	err := delivery.logService.CreateLog(logCore)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("internal server error "+err.Error()))
