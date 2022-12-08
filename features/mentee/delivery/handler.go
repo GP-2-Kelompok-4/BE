@@ -33,9 +33,10 @@ func (delivery *MenteeDelivery) AddMentee(c echo.Context) error {
 	}
 
 	dataCore := toCore(menteeInput)
+	dataResponse := fromCoreDataResponse(dataCore)
 	err := delivery.menteeService.Create(dataCore)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("internal server error"+err.Error()))
 	}
-	return c.JSON(http.StatusCreated, helper.SuccessWithDataResponse("success add new mentee", dataCore))
+	return c.JSON(http.StatusCreated, helper.SuccessWithDataResponse("success add new mentee", dataResponse))
 }
