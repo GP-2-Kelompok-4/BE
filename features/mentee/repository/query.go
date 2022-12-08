@@ -12,6 +12,7 @@ type menteeRepository struct {
 	db *gorm.DB
 }
 
+
 func New(db *gorm.DB) mentee.RepositoryInterface {
 	return &menteeRepository{
 		db: db,
@@ -34,6 +35,7 @@ func (repo *menteeRepository) Create(input mentee.MenteeCore) (row int, err erro
 	return int(tx.RowsAffected), nil
 
 }
+
 
 // GetAll implements mentee.RepositoryInterface
 func (repo *menteeRepository) GetAll(queryClass, queryEducationType, queryStatus string) (data []mentee.MenteeCore, err error) {
@@ -59,3 +61,31 @@ func (repo *menteeRepository) GetAll(queryClass, queryEducationType, queryStatus
 // 	dataCore := toCoreList(mentees)
 // 	return dataCore, nil
 // }
+
+// DeleteMentee implements mentee.RepositoryInterface
+func (repo *menteeRepository) DeleteMentee(id uint) (err error) {
+	var mentee Mentee
+
+	tx := repo.db.Delete(&mentee, id)
+	if tx.Error != nil {
+		return tx.Error
+	}
+	if tx.RowsAffected == 0 {
+		return errors.New("delete failed")
+	}
+	return nil
+}
+
+// UpdateClass implements mentee.RepositoryInterface
+func (repo *menteeRepository) UpdateMentee(input mentee.MenteeCore, id uint) (data mentee.MenteeCore, err error) {
+	var mentee Mentee
+
+	inputData := fromCore(input)
+	tx := repo.db.Model(&mentee).Where("id = ?", id).Updates(inputData)
+	if tx.Error != nil {
+		return data, tx.Error
+	}
+	data = mentee.toCore()
+	return data, nil
+}
+

@@ -31,10 +31,9 @@ func (delivery *LogDelivery) CreateLog(c echo.Context) error {
 		return c.JSON(http.StatusNotFound, helper.FailedResponse("requested resource was not found "+errBind.Error()))
 	}
 	logCore := requestToCore(logInput)
-	dataLog, err := delivery.logService.CreateLog(logCore)
+	err := delivery.logService.CreateLog(logCore)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("internal server error "+err.Error()))
 	}
-	return c.JSON(http.StatusCreated, helper.SuccessWithDataResponse("success add new log", dataLog))
-
+	return c.JSON(http.StatusCreated, helper.SuccessResponse("success add new log"))
 }
