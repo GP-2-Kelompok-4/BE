@@ -49,8 +49,11 @@ type Class struct {
 
 type ServiceInterface interface {
 	Create(input MenteeCore) (err error)
+	GetAll(queryClass, queryEducationType, queryStatus string) (data []MenteeCore, err error)
 }
 
 type RepositoryInterface interface {
 	Create(input MenteeCore) (row int, err error)
+	GetAll(queryClass, queryEducationType, queryStatus string) (data []MenteeCore, err error)
+	// GetAllFiltering(queryClass, queryEducationType, queryStatus string) (data []MenteeCore, err error)
 }

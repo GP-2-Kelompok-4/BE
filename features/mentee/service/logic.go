@@ -27,3 +27,12 @@ func (service *menteeService) Create(input mentee.MenteeCore) (err error) {
 	}
 	return nil
 }
+
+// GetAll implements mentee.ServiceInterface
+func (service *menteeService) GetAll(queryClass, queryEducationType, queryStatus string) (data []mentee.MenteeCore, err error) {
+	data, err = service.menteeRepository.GetAll(queryClass, queryEducationType, queryStatus)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
+}

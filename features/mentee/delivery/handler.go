@@ -23,6 +23,7 @@ func New(service mentee.ServiceInterface, e *echo.Echo) {
 	}
 
 	e.POST("/mentees", handler.AddMentee, middlewares.JWTMiddleware())
+	e.GET("/mentees", handler.GetAll, middlewares.JWTMiddleware())
 }
 
 func (delivery *MenteeDelivery) AddMentee(c echo.Context) error {
@@ -39,4 +40,18 @@ func (delivery *MenteeDelivery) AddMentee(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("internal server error"+err.Error()))
 	}
 	return c.JSON(http.StatusCreated, helper.SuccessWithDataResponse("success add new mentee", dataResponse))
+}
+
+func (delivery *MenteeDelivery) GetAll(c echo.Context) error {
+	queryClass := c.QueryParam("class")
+	queryEducationType := c.QueryParam("education_type")
+	queryStatus := c.QueryParam("status")
+	results, err := delivery.menteeService.GetAll(queryClass, queryEducationType, queryStatus)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, helper.FailedResponse("error read data"))
+	}
+
+	dataResponse := fromCoreList(results)
+
+	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("success read all data users", dataResponse))
 }
