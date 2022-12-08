@@ -128,10 +128,10 @@ func (dataModel *Mentee) toCore() mentee.MenteeCore {
 	}
 }
 
-// func toCoreList(dataModel []Mentee) []mentee.MenteeCore {
-// 	var dataCore []mentee.MenteeCore
-// 	for _, v := range dataModel {
-// 		dataCore = append(dataCore, v.toCore())
-// 	}
-// 	return dataCore
-// }
+func toCoreList(dataModel []Mentee) []mentee.MenteeCore {
+	var dataCore []mentee.MenteeCore
+	for _, v := range dataModel {
+		dataCore = append(dataCore, v.toCore())
+	}
+	return dataCore
+}

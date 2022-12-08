@@ -6,9 +6,6 @@ import (
 	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/mentee"
 )
 
-type ClassResponse struct {
-}
-
 type ResponseDataCore struct {
 	Name                   string    `json:"name" form:"name"`
 	Nickname               string    `json:"nickname" form:"nickname"`
@@ -28,6 +25,7 @@ type ResponseDataCore struct {
 	EmergencyContact       string    `json:"emergency_contact" form:"emergency_contact"`
 	EmergencyContactName   string    `json:"emergency_contact_name" form:"emergency_contact_name"`
 	EmergencyContactStatus string    `json:"emergency_contact_status" form:"emergency_contact_status"`
+	ClassName              string    `json:"class_name" form:"class_name"`
 }
 
 func fromCoreDataResponse(dataCore mentee.MenteeCore) ResponseDataCore {
@@ -50,5 +48,14 @@ func fromCoreDataResponse(dataCore mentee.MenteeCore) ResponseDataCore {
 		EmergencyContact:       dataCore.EmergencyContact,
 		EmergencyContactName:   dataCore.EmergencyContactName,
 		EmergencyContactStatus: dataCore.EmergencyContactStatus,
+		ClassName:              dataCore.Class.Name,
 	}
+}
+
+func fromCoreList(dataCore []mentee.MenteeCore) []ResponseDataCore {
+	var dataResponse []ResponseDataCore
+	for _, v := range dataCore {
+		dataResponse = append(dataResponse, fromCoreDataResponse(v))
+	}
+	return dataResponse
 }
