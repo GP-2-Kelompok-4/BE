@@ -72,7 +72,28 @@ func fromCoreList(dataCore []mentee.MenteeCore) []ResponseDataCore {
 	return dataResponse
 }
 
-func menteeDetail(dataCore mentee.MenteeCore) ResponseDataCore {
+type DetailMenteeResponse struct {
+	Name                   string        `json:"name" form:"name"`
+	Nickname               string        `json:"nickname" form:"nickname"`
+	Email                  string        `json:"email" form:"email"`
+	Gender                 string        `json:"gender" form:"gender"`
+	PhoneNumber            string        `json:"phone_number" form:"phone_number"`
+	TelegramAccount        string        `json:"telegram_account" form:"telegram_account"`
+	DiscordAccount         string        `json:"discord_account" form:"discord_account"`
+	Address                string        `json:"address" form:"address"`
+	HomeAddress            string        `json:"home_address" form:"home_address"`
+	Status                 string        `json:"status" form:"status"`
+	EducationType          string        `json:"education_type" form:"education_type"`
+	EducationMajor         string        `json:"education_major" form:"education_major"`
+	Institution            string        `json:"institution" form:"institution"`
+	EmergencyContact       string        `json:"emergency_contact" form:"emergency_contact"`
+	EmergencyContactName   string        `json:"emergency_contact_name" form:"emergency_contact_name"`
+	EmergencyContactStatus string        `json:"emergency_contact_status" form:"emergency_contact_status"`
+	ClassName              string        `json:"class_name" form:"class_name"`
+	Logs                   []LogResponse `json:"logs"`
+}
+
+func menteeDetail(dataCore mentee.MenteeCore) DetailMenteeResponse {
 
 	var ArrLogs []LogResponse
 
@@ -86,6 +107,7 @@ func menteeDetail(dataCore mentee.MenteeCore) ResponseDataCore {
 			UserID:   val.User.ID,
 		})
 	}
+
 
 	return ResponseDataCore{
 		ID:                     dataCore.ID,
