@@ -61,3 +61,13 @@ func fromCore(dataCore log.CoreLog) Log {
 	}
 	return logGorm
 }
+
+func toCore(dataCore Log) log.CoreLog {
+	logGorm := log.CoreLog{
+		UserID:   dataCore.ID,
+		MenteeID: dataCore.MenteeID,
+		Notes:    dataCore.Notes,
+		Status:   dataCore.Status,
+	}
+	return logGorm
+}

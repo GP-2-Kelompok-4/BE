@@ -21,20 +21,20 @@ func New(service log.ServiceInterface, e *echo.Echo) {
 }
 
 func (delivery *LogDelivery) CreateLog(c echo.Context) error {
-	// userLogin := middlewares.ExtractTokenUserId(c)
-	// if userLogin == 0 {
-	// 	return c.JSON(http.StatusNotFound, helper.FailedResponse("requested resource was not found"))
-	// }
+	userLogin := middlewares.ExtractTokenUserId(c)
+	if userLogin == 0 {
+		return c.JSON(http.StatusNotFound, helper.FailedResponse("requested resource was not found"))
+	}
 	logInput := LogRequest{}
 	errBind := c.Bind(&logInput)
 	if errBind != nil {
 		return c.JSON(http.StatusNotFound, helper.FailedResponse("requested resource was not found "+errBind.Error()))
 	}
 	logCore := requestToCore(logInput)
-	err := delivery.logService.CreateLog(logCore)
+	dataLog, err := delivery.logService.CreateLog(logCore)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("internal server error "+err.Error()))
 	}
-	return c.JSON(http.StatusCreated, helper.SuccessWithDataResponse("success add new class", logInput))
+	return c.JSON(http.StatusCreated, helper.SuccessWithDataResponse("success add new log", dataLog))
 
 }
