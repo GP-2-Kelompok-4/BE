@@ -100,6 +100,10 @@ func (dataModel *Mentee) toCore() mentee.MenteeCore {
 			ID:     val.ID,
 			Notes:  val.Notes,
 			Status: val.Status,
+			User: mentee.User{
+				ID:   val.User.ID,
+				Name: val.User.Name,
+			},
 		})
 	}
 	return mentee.MenteeCore{
