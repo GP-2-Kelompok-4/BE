@@ -86,6 +86,7 @@ type DetailMenteeResponse struct {
 	Status                 string        `json:"status" form:"status"`
 	EducationType          string        `json:"education_type" form:"education_type"`
 	EducationMajor         string        `json:"education_major" form:"education_major"`
+	Graduate               time.Time     `json:"graduate" form:"graduate"`
 	Institution            string        `json:"institution" form:"institution"`
 	EmergencyContact       string        `json:"emergency_contact" form:"emergency_contact"`
 	EmergencyContactName   string        `json:"emergency_contact_name" form:"emergency_contact_name"`
@@ -127,6 +128,7 @@ func menteeDetail(dataCore mentee.MenteeCore) DetailMenteeResponse {
 		EducationType:          dataCore.EducationType,
 		EducationMajor:         dataCore.EducationMajor,
 		Institution:            dataCore.Institution,
+		Graduate:               dataCore.Graduate,
 		ClassName:              dataCore.Class.Name,
 		Logs:                   ArrLogs,
 	}
