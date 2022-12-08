@@ -10,13 +10,14 @@ type CoreLog struct {
 	Notes     string
 	Status    string
 	CreatedAt time.Time
-	User      User
-	Mentee    Mentee
+	// User      User
+	Mentee Mentee
 }
-type User struct {
-	ID   uint
-	Name string
-}
+
+// type User struct {
+// 	ID   uint
+// 	Name string
+// }
 
 type Mentee struct {
 	ID   uint

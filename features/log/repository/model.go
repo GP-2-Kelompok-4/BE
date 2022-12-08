@@ -16,20 +16,20 @@ type Log struct {
 	Status   string
 }
 
-type User struct {
-	gorm.Model
-	Name         string
-	Email        string
-	Password     string
-	Phone_Number string
-	Role         string
-	Address      string
-	Home_Address string
-	Team         string
-	Status       string
-	Gender       string
-	Log          []Log
-}
+// type User struct {
+// 	gorm.Model
+// 	Name         string
+// 	Email        string
+// 	Password     string
+// 	Phone_Number string
+// 	Role         string
+// 	Address      string
+// 	Home_Address string
+// 	Team         string
+// 	Status       string
+// 	Gender       string
+// 	Log          []Log
+// }
 
 type Mentee struct {
 	gorm.Model
