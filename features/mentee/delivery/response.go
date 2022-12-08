@@ -7,6 +7,7 @@ import (
 )
 
 type ResponseDataCore struct {
+	ID                     uint
 	Name                   string        `json:"name" form:"name"`
 	Nickname               string        `json:"nickname" form:"nickname"`
 	Email                  string        `json:"email" form:"email"`
@@ -40,6 +41,7 @@ type LogResponse struct {
 
 func fromCoreDataResponse(dataCore mentee.MenteeCore) ResponseDataCore {
 	return ResponseDataCore{
+		ID:                     dataCore.ID,
 		Name:                   dataCore.Name,
 		Nickname:               dataCore.Nickname,
 		Email:                  dataCore.Email,
@@ -86,6 +88,7 @@ func menteeDetail(dataCore mentee.MenteeCore) ResponseDataCore {
 	}
 
 	return ResponseDataCore{
+		ID:                     dataCore.ID,
 		Name:                   dataCore.Name,
 		Nickname:               dataCore.Nickname,
 		Status:                 dataCore.Status,
