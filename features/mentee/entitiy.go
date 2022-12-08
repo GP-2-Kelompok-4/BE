@@ -49,8 +49,12 @@ type Class struct {
 
 type ServiceInterface interface {
 	Create(input MenteeCore) (err error)
+	DeleteMentee(id uint) (err error)
+	UpdateMentee(input MenteeCore, id uint) (data MenteeCore, err error)
 }
 
 type RepositoryInterface interface {
 	Create(input MenteeCore) (row int, err error)
+	DeleteMentee(id uint) (err error)
+	UpdateMentee(input MenteeCore, id uint) (data MenteeCore, err error)
 }
