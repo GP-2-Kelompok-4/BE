@@ -33,7 +33,7 @@ func (service *authService) Login(email, password string) (LoginData auth.Login,
 		return LoginData, errors.New("login failed")
 	}
 
-	token, errToken := middlewares.CreateToken(int(result.ID), result.Role)
+	token, errToken := middlewares.CreateToken(int(result.ID), result.Role, result.Name)
 	if errToken != nil {
 		return LoginData, errToken
 	}
