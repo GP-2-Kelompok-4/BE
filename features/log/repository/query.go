@@ -18,25 +18,15 @@ func New(db *gorm.DB) log.RepositoryInterface {
 }
 
 // CreateLog implements log.RepositoryInterface
-func (repo *logRepository) CreateLog(data log.CoreLog) (input log.CoreLog, err error) {
-	logModel := Log{}
+func (repo *logRepository) CreateLog(data log.CoreLog) (err error) {
 	classGorm := fromCore(data)
 	tx := repo.db.Create(&classGorm)
 	if tx.Error != nil {
-		return data, tx.Error
+		return tx.Error
 	}
 	if tx.RowsAffected == 0 {
-		return data, errors.New("insert failed")
+		return errors.New("insert failed")
 	}
 
-	tx1 := repo.db.Where("id= ? ", classGorm.ID).First(&logModel)
-	if tx1.Error != nil {
-		return data, tx.Error
-	}
-
-	// tx2 := repo.db.Preload("User").Preload("Mentee").Find(&logModel, logModel.ID)
-	// if tx2.Error != nil {
-	// 	return tx.Error
-	// }
-	return data, nil
+	return nil
 }
