@@ -41,6 +41,7 @@ func (service *authService) Login(email, password string) (LoginData auth.Login,
 	var DataLogin auth.Login
 	DataLogin.ID = result.ID
 	DataLogin.Email = result.Email
+	DataLogin.Name = result.Name
 	DataLogin.Role = result.Role
 	DataLogin.Token = token
 

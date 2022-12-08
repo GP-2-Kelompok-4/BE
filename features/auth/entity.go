@@ -21,6 +21,7 @@ type Core struct {
 type Login struct {
 	ID    uint
 	Email string
+	Name  string
 	Role  string
 	Token string
 }
