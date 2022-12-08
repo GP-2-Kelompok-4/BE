@@ -19,6 +19,7 @@ func New(db *gorm.DB) log.RepositoryInterface {
 
 // CreateLog implements log.RepositoryInterface
 func (repo *logRepository) CreateLog(data log.CoreLog) (err error) {
+	var mentee Mentee
 	classGorm := fromCore(data)
 	tx := repo.db.Create(&classGorm)
 	if tx.Error != nil {
@@ -27,6 +28,9 @@ func (repo *logRepository) CreateLog(data log.CoreLog) (err error) {
 	if tx.RowsAffected == 0 {
 		return errors.New("insert failed")
 	}
-
+	tx2 := repo.db.Model(&mentee).Where("id = ?", data.MenteeID).Update("status", data.Status)
+	if tx2.Error != nil {
+		return tx.Error
+	}
 	return nil
 }
