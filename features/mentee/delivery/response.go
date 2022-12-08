@@ -31,12 +31,13 @@ type ResponseDataCore struct {
 }
 
 type LogResponse struct {
-	ID       uint   `json:"id"`
-	Username string `json:"user_name"`
-	Log      string `json:"Log"`
-	Status   string `json:"status"`
-	MenteeID uint   `json:"mentee_id"`
-	UserID   uint   `json:"user_id"`
+	ID        uint      `json:"id"`
+	Username  string    `json:"user_name"`
+	Log       string    `json:"Log"`
+	Status    string    `json:"status"`
+	MenteeID  uint      `json:"mentee_id"`
+	UserID    uint      `json:"user_id"`
+	CreatedAt time.Time `json:"created_at"`
 }
 
 func fromCoreDataResponse(dataCore mentee.MenteeCore) ResponseDataCore {
@@ -101,12 +102,13 @@ func menteeDetail(dataCore mentee.MenteeCore) DetailMenteeResponse {
 
 	for _, val := range dataCore.LogStruct {
 		ArrLogs = append(ArrLogs, LogResponse{
-			ID:       val.ID,
-			Username: val.UserName,
-			Log:      val.Notes,
-			Status:   val.Status,
-			MenteeID: dataCore.ID,
-			UserID:   val.UserId,
+			ID:        val.ID,
+			Username:  val.UserName,
+			Log:       val.Notes,
+			Status:    val.Status,
+			MenteeID:  dataCore.ID,
+			UserID:    val.UserId,
+			CreatedAt: val.CreatedAt,
 		})
 	}
 
