@@ -17,12 +17,12 @@ func New(repo log.RepositoryInterface) log.ServiceInterface {
 }
 
 // CreateLogs implements log.ServiceInterface
-func (repo *logService) CreateLog(data log.CoreLog) (err error) {
-	errCreate := repo.logRepository.CreateLog(data)
+func (repo *logService) CreateLog(input log.CoreLog) (data log.CoreLog, err error) {
+	result, errCreate := repo.logRepository.CreateLog(data)
 	if errCreate != nil {
-		return errors.New("failed create log, error query")
+		return data, errors.New("failed create log, error query")
 	}
 
-	return nil
+	return result, nil
 
 }
