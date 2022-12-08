@@ -118,6 +118,7 @@ func menteeDetail(dataCore mentee.MenteeCore) DetailMenteeResponse {
 		DiscordAccount:         dataCore.DiscordAccount,
 		PhoneNumber:            dataCore.PhoneNumber,
 		EmergencyContact:       dataCore.EmergencyContact,
+		EmergencyContactName:   dataCore.EmergencyContactName,
 		EmergencyContactStatus: dataCore.EmergencyContactStatus,
 		EducationType:          dataCore.EducationType,
 		EducationMajor:         dataCore.EducationMajor,
