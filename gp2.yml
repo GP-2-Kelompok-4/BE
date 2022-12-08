@@ -405,7 +405,7 @@ paths:
               phone_number: "081122"
               telegram_account: "@budi"
               discord_account: "Budi#123"
-              class: "BE 13"
+              class_id: 1
               address: jl. sepakbola, Yogyakarta
               home_address: "jl. Sukamaju, Bandung"
               status: "placement"
@@ -577,14 +577,14 @@ paths:
               type: object
               $ref: '#/components/schemas/MenteeRequest' 
             example:
-              name: "Andi santoso"
-              nickname: "Andi"
+              name: "Budi Sudarsono"
+              nickname: "Budi"
               gender: "Male"
-              email: "Andi@gmail.com"
+              email: "Budi@gmail.com"
               phone_number: "081122"
-              telegram_account: "@Andi"
-              discord_account: "Andi#123"
-              class: "BE 13"
+              telegram_account: "@budi"
+              discord_account: "Budi#123"
+              class_id: 1
               address: jl. sepakbola, Yogyakarta
               home_address: "jl. Sukamaju, Bandung"
               status: "placement"
@@ -611,7 +611,7 @@ paths:
         '500':
           $ref: '#/components/responses/500'
 
-  /class:
+  /classes:
     get:
       tags:
         - Classes
@@ -1087,7 +1087,7 @@ components:
             - female
         phone_number:
           type: string
-        class:
+        class_id:
           type: integer
           format: int64
         address:
