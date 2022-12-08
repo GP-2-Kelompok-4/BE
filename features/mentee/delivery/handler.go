@@ -62,6 +62,7 @@ func (delivery *MenteeDelivery) GetAll(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("success read all data users", dataResponse))
 }
+
 func (delivery *MenteeDelivery) DeleteMentee(c echo.Context) error {
 	id, errConv := strconv.Atoi(c.Param("id"))
 	if errConv != nil {

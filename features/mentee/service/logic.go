@@ -36,6 +36,7 @@ func (service *menteeService) GetAll(queryClass, queryEducationType, queryStatus
 	}
 	return
 }
+
 func (service *menteeService) DeleteMentee(id uint) (err error) {
 	err = service.menteeRepository.DeleteMentee(id)
 	if err != nil {
