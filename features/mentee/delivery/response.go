@@ -73,6 +73,7 @@ func fromCoreList(dataCore []mentee.MenteeCore) []ResponseDataCore {
 }
 
 type DetailMenteeResponse struct {
+	ID                     uint          `json:"id" form:"id"`
 	Name                   string        `json:"name" form:"name"`
 	Nickname               string        `json:"nickname" form:"nickname"`
 	Email                  string        `json:"email" form:"email"`
@@ -108,8 +109,7 @@ func menteeDetail(dataCore mentee.MenteeCore) DetailMenteeResponse {
 		})
 	}
 
-
-	return ResponseDataCore{
+	return DetailMenteeResponse{
 		ID:                     dataCore.ID,
 		Name:                   dataCore.Name,
 		Nickname:               dataCore.Nickname,
@@ -122,6 +122,7 @@ func menteeDetail(dataCore mentee.MenteeCore) DetailMenteeResponse {
 		DiscordAccount:         dataCore.DiscordAccount,
 		PhoneNumber:            dataCore.PhoneNumber,
 		EmergencyContact:       dataCore.EmergencyContact,
+		EmergencyContactName:   dataCore.EmergencyContactName,
 		EmergencyContactStatus: dataCore.EmergencyContactStatus,
 		EducationType:          dataCore.EducationType,
 		EducationMajor:         dataCore.EducationMajor,
