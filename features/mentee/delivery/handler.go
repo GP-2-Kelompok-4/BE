@@ -25,9 +25,8 @@ func New(service mentee.ServiceInterface, e *echo.Echo) {
 	}
 
 	e.POST("/mentees", handler.AddMentee, middlewares.JWTMiddleware())
-
 	e.GET("/mentees", handler.GetAll, middlewares.JWTMiddleware())
-
+	e.GET("/mentees/:id", handler.GetMenteeById, middlewares.JWTMiddleware())
 	e.DELETE("/mentees/:id", handler.DeleteMentee, middlewares.JWTMiddleware())
 	e.PUT("/mentees/:id", handler.UpdateMentee, middlewares.JWTMiddleware())
 
@@ -90,5 +89,21 @@ func (delivery *MenteeDelivery) UpdateMentee(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("internal server error"+err.Error()))
 	}
 	return c.JSON(http.StatusCreated, helper.SuccessResponse("success update class"))
+
+}
+
+func (delivery *MenteeDelivery) GetMenteeById(c echo.Context) error {
+	id := c.Param("id")
+	id_conv, err_conv := strconv.Atoi(id)
+	if err_conv != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err_conv.Error())
+	}
+
+	result, err := delivery.menteeService.GetMentee(uint(id_conv))
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("fail get data"))
+	}
+	return c.JSON(http.StatusOK, helper.SuccessWithDataResponse("success get data", menteeDetail(result)))
 
 }

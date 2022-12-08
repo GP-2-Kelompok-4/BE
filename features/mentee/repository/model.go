@@ -80,20 +80,28 @@ func fromCore(dataCore mentee.MenteeCore) Mentee {
 	return menteeGorm
 }
 
-func (dataModel *Log) toCoreLog() mentee.Log {
-	return mentee.Log{
-		ID:     dataModel.ID,
-		UserId: dataModel.UserId,
-		Status: dataModel.Status,
-		Notes:  dataModel.Notes,
-		User: mentee.User{
-			ID:   dataModel.User.ID,
-			Name: dataModel.User.Name,
-		},
-	}
-}
+// func (dataModel *Log) toCoreLog() mentee.Log {
+// 	return mentee.Log{
+// 		ID:     dataModel.ID,
+// 		UserId: dataModel.UserId,
+// 		Status: dataModel.Status,
+// 		Notes:  dataModel.Notes,
+// 		User: mentee.User{
+// 			ID:   dataModel.User.ID,
+// 			Name: dataModel.User.Name,
+// 		},
+// 	}
+// }
 
 func (dataModel *Mentee) toCore() mentee.MenteeCore {
+	var arrLogs []mentee.Log
+	for _, val := range dataModel.Log {
+		arrLogs = append(arrLogs, mentee.Log{
+			ID:     val.ID,
+			Notes:  val.Notes,
+			Status: val.Status,
+		})
+	}
 	return mentee.MenteeCore{
 		ID:                     dataModel.ID,
 		Name:                   dataModel.Name,
@@ -117,6 +125,7 @@ func (dataModel *Mentee) toCore() mentee.MenteeCore {
 			ID:   dataModel.Class.ID,
 			Name: dataModel.Class.Name,
 		},
+		LogStruct: arrLogs,
 		// LogStruct: mentee.Log{
 		// 	ID:        dataModel.LogStruct.ID,
 		// 	UserId:    dataModel.LogStruct.UserId,

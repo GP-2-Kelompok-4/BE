@@ -24,7 +24,7 @@ type MenteeCore struct {
 	EmergencyContact       string
 	EmergencyContactName   string
 	EmergencyContactStatus string
-	LogStruct              Log
+	LogStruct              []Log
 	Class                  Class
 }
 
@@ -51,17 +51,16 @@ type ServiceInterface interface {
 	Create(input MenteeCore) (err error)
 
 	GetAll(queryClass, queryEducationType, queryStatus string) (data []MenteeCore, err error)
-
+	GetMentee(id uint) (data MenteeCore, err error)
 	DeleteMentee(id uint) (err error)
 	UpdateMentee(input MenteeCore, id uint) (err error)
 }
 
 type RepositoryInterface interface {
 	Create(input MenteeCore) (row int, err error)
-
 	GetAll(queryClass, queryEducationType, queryStatus string) (data []MenteeCore, err error)
 	// GetAllFiltering(queryClass, queryEducationType, queryStatus string) (data []MenteeCore, err error)
-
+	GetMentee(id uint) (data MenteeCore, err error)
 	DeleteMentee(id uint) (err error)
 	UpdateMentee(input MenteeCore, id uint) (err error)
 }

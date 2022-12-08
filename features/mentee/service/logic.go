@@ -53,3 +53,13 @@ func (service *menteeService) UpdateMentee(input mentee.MenteeCore, id uint) (er
 	}
 	return nil
 }
+
+// GetMentee implements mentee.ServiceInterface
+func (service *menteeService) GetMentee(id uint) (data mentee.MenteeCore, err error) {
+	data, err = service.menteeRepository.GetMentee(id)
+	if err != nil {
+		return data, errors.New("failed update data, error query")
+
+	}
+	return data, nil
+}
