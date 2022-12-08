@@ -9,12 +9,23 @@ type CoreLog struct {
 	Notes     string
 	Status    string
 	CreatedAt time.Time
+	User      User
+	Mentee    Mentee
+}
+type User struct {
+	ID   uint
+	Name string
+}
+
+type Mentee struct {
+	ID   uint
+	Name string
 }
 
 type ServiceInterface interface {
-	CreateLog(data CoreLog) (res CoreLog, err error)
+	CreateLog(data CoreLog) (err error)
 }
 
 type RepositoryInterface interface {
-	CreateLog(data CoreLog) (res CoreLog, err error)
+	CreateLog(data CoreLog) (err error)
 }
