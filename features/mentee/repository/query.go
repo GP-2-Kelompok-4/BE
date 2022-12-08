@@ -12,7 +12,6 @@ type menteeRepository struct {
 	db *gorm.DB
 }
 
-
 func New(db *gorm.DB) mentee.RepositoryInterface {
 	return &menteeRepository{
 		db: db,
@@ -36,11 +35,11 @@ func (repo *menteeRepository) Create(input mentee.MenteeCore) (row int, err erro
 
 }
 
-
 // GetAll implements mentee.RepositoryInterface
 func (repo *menteeRepository) GetAll(queryClass, queryEducationType, queryStatus string) (data []mentee.MenteeCore, err error) {
 	var mentees []Mentee
-	tx := repo.db.Preload("Class").Find(&mentees)
+	// tx := repo.db.Preload("Class").Find(&mentees)
+	tx := repo.db.Preload("Class").Where("class.name = ? AND education_type = ? AND status = ?", queryClass, queryEducationType, queryStatus).Find(&mentees)
 	if tx.Error != nil {
 		return nil, tx.Error
 	}
@@ -53,7 +52,6 @@ func (repo *menteeRepository) GetAll(queryClass, queryEducationType, queryStatus
 // func (repo *menteeRepository) GetAllFiltering(queryClass string, queryEducationType string, queryStatus string) (data []mentee.MenteeCore, err error) {
 // 	var mentees []Mentee
 // 	// tx := repo.db.Preload("Class").Where(&Mentee{EducationType: queryEducationType, Status: queryEducationType}).Find(&mentees)
-// 	tx := repo.db.Preload("Class").Where("class.name = ? AND education_type = ? AND status = ?", queryClass, queryEducationType, queryStatus).Find(&mentees)
 // 	if tx.Error != nil {
 // 		return nil, tx.Error
 // 	}
@@ -88,4 +86,3 @@ func (repo *menteeRepository) UpdateMentee(input mentee.MenteeCore, id uint) (da
 	data = mentee.toCore()
 	return data, nil
 }
-
