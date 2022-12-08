@@ -53,6 +53,11 @@ func (delivery *MenteeDelivery) GetAll(c echo.Context) error {
 	queryClass := c.QueryParam("class")
 	queryEducationType := c.QueryParam("education_type")
 	queryStatus := c.QueryParam("status")
+
+	helper.LogDebug("\n queryClass= ", queryClass)
+	helper.LogDebug("\n queryEduType = ", queryEducationType)
+	helper.LogDebug("\n queryStatus = ", queryStatus)
+
 	results, err := delivery.menteeService.GetAll(queryClass, queryEducationType, queryStatus)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, helper.FailedResponse("error read data"))
