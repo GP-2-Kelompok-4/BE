@@ -99,11 +99,12 @@ func (dataModel *Mentee) toCore() mentee.MenteeCore {
 	var arrLogs []mentee.Log
 	for _, val := range dataModel.Log {
 		arrLogs = append(arrLogs, mentee.Log{
-			ID:       val.ID,
-			UserName: val.UserName,
-			UserId:   val.UserId,
-			Notes:    val.Notes,
-			Status:   val.Status,
+			ID:        val.ID,
+			UserName:  val.UserName,
+			UserId:    val.UserId,
+			Notes:     val.Notes,
+			Status:    val.Status,
+			CreatedAt: val.CreatedAt,
 			// User: mentee.User{
 			// 	ID:   val.User.ID,
 			// 	Name: val.User.Name,
