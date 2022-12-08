@@ -86,10 +86,10 @@ func (delivery *MenteeDelivery) UpdateMentee(c echo.Context) error {
 	}
 
 	dataUpdateCore := toCore(inputData)
-	_, err := delivery.menteeService.UpdateMentee(dataUpdateCore, uint(idParam))
+	err := delivery.menteeService.UpdateMentee(dataUpdateCore, uint(idParam))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("internal server error"+err.Error()))
 	}
-	return c.JSON(http.StatusCreated, helper.SuccessWithDataResponse("success update class", dataUpdateCore))
+	return c.JSON(http.StatusCreated, helper.SuccessResponse("success update class"))
 
 }
