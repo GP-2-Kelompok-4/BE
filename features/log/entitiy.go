@@ -23,9 +23,9 @@ type Mentee struct {
 }
 
 type ServiceInterface interface {
-	CreateLog(input CoreLog) (data CoreLog, err error)
+	CreateLog(input CoreLog) (err error)
 }
 
 type RepositoryInterface interface {
-	CreateLog(input CoreLog) (data CoreLog, err error)
+	CreateLog(input CoreLog) (err error)
 }
