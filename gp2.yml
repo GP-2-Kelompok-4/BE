@@ -605,27 +605,7 @@ paths:
                 $ref: '#/components/schemas/ResponseMentee'
               example:
                 status: "success"
-                message: "success delete users"
-                data: 
-                  id: 2
-                  name: "Andi santoso"
-                  nickname: "Andi"
-                  gender: "Male"
-                  email: "Andi@gmail.com"
-                  phone_number: "081122"
-                  telegram_account: "@Andi"
-                  discord_account: "Andi#123"
-                  class: "BE 13"
-                  address: jl. sepakbola, Yogyakarta
-                  home_address: "jl. Sukamaju, Bandung"
-                  status: "placement"
-                  education_type: "Non-IT"
-                  education_major: "IPA"
-                  institution: "SMA 1 Sukamaju"
-                  graduate: "2020"
-                  emergency_contact: "0811122"
-                  emergency_contact_name: "Mawar"
-                  emergency_contact_status: "Orang tua"
+                message: "success update users"
         '404':
           $ref: '#/components/responses/404'
         '500':
@@ -850,13 +830,6 @@ paths:
                 $ref: '#/components/schemas/ResponseLog'
               example:
                 message: "success add new log"
-                data: 
-                  id: 1
-                  user_name: "fakhry"
-                  mentee_name: "jojo"
-                  notes: "this is the notes related to mentee"
-                  status: "placement"
-                  created_at: "2022-12-05 17:15:20"
                 
         '400':
           description: Add new mentee failed.
