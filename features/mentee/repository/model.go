@@ -42,11 +42,12 @@ type Class struct {
 type Log struct {
 	gorm.Model
 	UserId   uint
+	UserName string
 	MenteeId uint
 	Status   string
 	Notes    string
-	User     User
-	Mentee   Mentee
+	// User     User
+	Mentee Mentee
 }
 
 type User struct {
@@ -98,13 +99,15 @@ func (dataModel *Mentee) toCore() mentee.MenteeCore {
 	var arrLogs []mentee.Log
 	for _, val := range dataModel.Log {
 		arrLogs = append(arrLogs, mentee.Log{
-			ID:     val.ID,
-			Notes:  val.Notes,
-			Status: val.Status,
-			User: mentee.User{
-				ID:   val.User.ID,
-				Name: val.User.Name,
-			},
+			ID:       val.ID,
+			UserName: val.UserName,
+			UserId:   val.UserId,
+			Notes:    val.Notes,
+			Status:   val.Status,
+			// User: mentee.User{
+			// 	ID:   val.User.ID,
+			// 	Name: val.User.Name,
+			// },
 		})
 		fmt.Println(arrLogs)
 	}

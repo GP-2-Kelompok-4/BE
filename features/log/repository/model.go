@@ -10,6 +10,7 @@ import (
 type Log struct {
 	gorm.Model
 	UserID   uint
+	UserName string
 	MenteeID uint
 	Notes    string
 	Status   string
@@ -55,6 +56,7 @@ type Mentee struct {
 func fromCore(dataCore log.CoreLog) Log {
 	logGorm := Log{
 		UserID:   dataCore.UserID,
+		UserName: dataCore.UserName,
 		MenteeID: dataCore.MenteeID,
 		Notes:    dataCore.Notes,
 		Status:   dataCore.Status,

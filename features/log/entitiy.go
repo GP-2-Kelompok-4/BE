@@ -5,6 +5,7 @@ import "time"
 type CoreLog struct {
 	ID        uint
 	UserID    uint
+	UserName  string
 	MenteeID  uint
 	Notes     string
 	Status    string

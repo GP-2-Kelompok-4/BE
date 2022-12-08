@@ -90,7 +90,7 @@ func (repo *menteeRepository) UpdateMentee(input mentee.MenteeCore, id uint) (er
 func (repo *menteeRepository) GetMentee(id uint) (data mentee.MenteeCore, err error) {
 	var mentee Mentee
 
-	tx := repo.db.Preload("Log").Preload("User").Preload("Class").First(&mentee, id)
+	tx := repo.db.Preload("Log").Preload("Class").First(&mentee, id)
 	if tx.Error != nil {
 		return data, tx.Error
 	}
