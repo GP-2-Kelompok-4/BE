@@ -24,8 +24,8 @@ func (service *userService) GetAllUser() (data []user.Core, err error) {
 }
 
 func (service *userService) AddUser(input user.Core) (err error) {
-	input.Gender = "Male"
-	input.Team = "Academic"
+	input.Gender = "Not-Assigned"
+	input.Team = "Not-Assigned"
 	input.Status = "Active"
 
 	hash_pass, errHash := helper.HashPassword(input.Password)
