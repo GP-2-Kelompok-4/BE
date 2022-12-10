@@ -19,6 +19,7 @@ type User struct {
 	Team         string
 	Status       string
 	Gender       string
+	ImageUrl     string
 	Log          []Log
 }
 
@@ -50,6 +51,7 @@ func fromCore(dataCore _user.Core) User {
 		Team:         dataCore.Team,
 		Status:       dataCore.Status,
 		Gender:       dataCore.Gender,
+		ImageUrl:     dataCore.ImageUrl,
 	}
 	return userGorm
 }

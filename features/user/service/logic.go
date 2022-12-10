@@ -2,9 +2,11 @@ package service
 
 import (
 	"errors"
+	"log"
 
 	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/features/user"
 	"github.com/GP-2-Kelompok-4/Immersive-Dashboard-App/utils/helper"
+	"github.com/labstack/echo/v4"
 )
 
 type userService struct {
@@ -23,7 +25,7 @@ func (service *userService) GetAllUser() (data []user.Core, err error) {
 
 }
 
-func (service *userService) AddUser(input user.Core) (err error) {
+func (service *userService) AddUser(input user.Core, c echo.Context) (err error) {
 	input.Gender = "Not-Assigned"
 	input.Team = "Not-Assigned"
 	input.Status = "Active"
@@ -33,6 +35,19 @@ func (service *userService) AddUser(input user.Core) (err error) {
 		return errHash
 	}
 	input.Password = hash_pass
+
+	// upload foto
+	file, _ := c.FormFile("file")
+	if file != nil {
+		res, err := helper.UploadProfile(c)
+		if err != nil {
+			return errors.New("Registration Failed. Cannot Upload Data.")
+		}
+		log.Print(res)
+		input.ImageUrl = res
+	} else {
+		input.ImageUrl = "https://project3bucker.s3.ap-southeast-1.amazonaws.com/dummy-profile-pic.png"
+	}
 
 	_, errCreate := service.userRepository.AddUser(input)
 	if errCreate != nil {
