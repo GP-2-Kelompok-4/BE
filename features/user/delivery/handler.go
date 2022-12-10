@@ -47,7 +47,7 @@ func (delivery *UserDelivery) AddUser(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, helper.FailedResponse("Error binding data "+errBind.Error()))
 	}
 	dataCore := requestToCore(userInput)
-	err := delivery.userService.AddUser(dataCore)
+	err := delivery.userService.AddUser(dataCore, c)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, helper.FailedResponse("failed insert data"+err.Error()))
 	}

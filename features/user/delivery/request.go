@@ -13,6 +13,7 @@ type UserRequest struct {
 	Team         string `json:"team" form:"team"`
 	Status       string `json:"status" form:"status"`
 	Gender       string `json:"gender" form:"gender"`
+	File         string `json:"file" form:"file"`
 }
 
 func requestToCore(userInput UserRequest) user.Core {
@@ -27,6 +28,7 @@ func requestToCore(userInput UserRequest) user.Core {
 		Team:         userInput.Team,
 		Status:       userInput.Status,
 		Gender:       userInput.Gender,
+		ImageUrl:     userInput.File,
 	}
 	return userCoreData
 }
